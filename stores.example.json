@@ -1,0 +1,14 @@
+[
+  {
+    "id": "my-store",
+    "name": "My Store",
+    "domain": "my-store.myshopify.com",
+    "directory": "D:\\path\\to\\theme",
+    "store_password": "",
+    "theme_password": "",
+    "pinned": true,
+    "created_at": 1700000000,
+    "updated_at": 1700000000,
+    "used_at": 1700000000
+  }
+]

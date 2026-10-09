@@ -1,0 +1,9 @@
+[
+  {
+    "id": "dev-command",
+    "name": "Dev Command",
+    "directory": "D:\\path\\to\\workspace",
+    "command": "npm run dev",
+    "description": "本地自定义命令示例"
+  }
+]
