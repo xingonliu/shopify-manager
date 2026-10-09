@@ -1,0 +1,9 @@
+[
+  {
+    "id": "figma-mcp",
+    "name": "Figma MCP (Socket)",
+    "directory": "D:\\code\\MCP\\claude-talk-to-figma-mcp",
+    "command": "bun run socket",
+    "description": "Claude Talk to Figma MCP Socket 服务"
+  }
+]

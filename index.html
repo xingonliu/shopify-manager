@@ -1,0 +1,4833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopify Theme Manager — 管理控制台</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10.5 308 172 172'%3E%3Cpath fill='%2395BF47' d='M131.5 341.9c-.1-.9-.9-1.3-1.5-1.3s-13.7-1-13.7-1-9.1-9.1-10.2-10c-1-1-2.9-.7-3.7-.5-.1 0-2 .6-5.1 1.6-3.1-8.9-8.4-17-17.9-17h-.9c-2.6-3.4-6-5-8.8-5-22 0-32.6 27.5-35.9 41.5-8.6 2.7-14.7 4.5-15.4 4.8-4.8 1.5-4.9 1.6-5.5 6.1-.5 3.4-13 100.1-13 100.1l97.3 18.2L150 468c.1-.2-18.4-125.2-18.5-126.1zm-39.6-9.8c-2.4.7-5.3 1.6-8.2 2.6v-1.8c0-5.4-.7-9.8-2-13.3 5 .6 8.1 6.1 10.2 12.5zm-16.3-11.4c1.3 3.4 2.2 8.2 2.2 14.8v1c-5.4 1.7-11.1 3.4-17 5.3 3.3-12.6 9.6-18.8 14.8-21.1zm-6.4-6.2c1 0 2 .4 2.8 1-7.1 3.3-14.6 11.6-17.7 28.4-4.7 1.5-9.2 2.8-13.5 4.2 3.6-12.8 12.6-33.6 28.4-33.6z'/%3E%3Cpath fill='%235E8E3E' d='M130 340.4c-.6 0-13.7-1-13.7-1s-9.1-9.1-10.2-10c-.4-.4-.9-.6-1.3-.6l-7.3 150.6 52.8-11.4s-18.5-125.2-18.6-126.1c-.4-.9-1.1-1.3-1.7-1.5z'/%3E%3Cpath fill='%23FFF' d='M79.4 369.6L73 388.9s-5.8-3.1-12.7-3.1c-10.3 0-10.8 6.5-10.8 8.1 0 8.8 23 12.2 23 32.9 0 16.3-10.3 26.8-24.2 26.8-16.8 0-25.2-10.4-25.2-10.4l4.5-14.8s8.8 7.6 16.2 7.6c4.9 0 6.9-3.8 6.9-6.6 0-11.5-18.8-12-18.8-31 0-15.9 11.4-31.3 34.5-31.3 8.6-.1 13 2.5 13 2.5z'/%3E%3C/svg%3E">
+  <link rel="alternate icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    (function() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const theme = (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       SHOPIFY POLARIS DESIGN SYSTEM TOKENS
+       ========================================================================== */
+    :root {
+      color-scheme: light;
+      /* Surface & Canvas */
+      --p-color-bg: #f1f2f4;
+      --p-color-bg-surface: #ffffff;
+      --p-color-bg-surface-hover: #f7f8f9;
+      --p-color-bg-surface-active: #f1f2f4;
+      --p-color-bg-subdued: #fafbfb;
+      --p-color-bg-topbar: #1a1a1a;
+      --p-color-bg-nav: #ebebeb;
+      --p-color-bg-nav-active: #e3e5e8;
+
+      /* Borders & Dividers */
+      --p-color-border: #dce0e5;
+      --p-color-border-subtle: #e5e8ec;
+      --p-color-border-dark: #8c9196;
+
+      /* Typography */
+      --p-color-text: #202223;
+      --p-color-text-subdued: #6d7175;
+      --p-color-text-disabled: #8c9196;
+      --p-color-text-inverse: #ffffff;
+
+      /* Brand & Primary Actions */
+      --p-color-primary: #303030;
+      --p-color-primary-hover: #1a1a1a;
+      --p-color-shopify-green: #008060;
+      --p-color-shopify-green-hover: #006e52;
+      --p-color-shopify-green-light: #e3f5ec;
+
+      /* Tones (Badges & Banners) */
+      --p-tone-success-bg: #dcf6e5;
+      --p-tone-success-text: #005e46;
+      --p-tone-success-border: #aee9d1;
+
+      --p-tone-warning-bg: #fff5ea;
+      --p-tone-warning-text: #7a4300;
+      --p-tone-warning-border: #ffd6a4;
+
+      --p-tone-critical-bg: #ffe5e5;
+      --p-tone-critical-text: #8c1d18;
+      --p-tone-critical-border: #fed3d1;
+
+      --p-tone-info-bg: #e0f0ff;
+      --p-tone-info-text: #004b87;
+      --p-tone-info-border: #b4dbff;
+
+      --p-tone-neutral-bg: #e4e5e7;
+      --p-tone-neutral-text: #4a4d52;
+      --p-tone-neutral-border: #d2d5d8;
+
+      /* Typography Stacks */
+      --p-font-family: "Inter", -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      --p-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, Menlo, Monaco, monospace;
+
+      /* Radius Tokens (iOS G2 60% Continuous Curvature) */
+      --p-radius-sm: 16px;
+      --p-radius-md: 24px;
+      --p-radius-lg: 32px;
+      --p-radius-full: 9999px;
+      --p-radius-btn: 16px;
+      --p-radius-btn-sm: 16px;
+
+      --p-shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --p-shadow-popover: 0 3px 12px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+      --p-shadow-modal: 0 12px 36px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.08);
+
+      --p-transition: all 0.15s ease-in-out;
+    }
+
+    /* ==========================================================================
+       DARK MODE TOKENS & OVERRIDES
+       ========================================================================== */
+    [data-theme="dark"] {
+      color-scheme: dark;
+
+      /* Surface & Canvas */
+      --p-color-bg: #101216;
+      --p-color-bg-surface: #191c23;
+      --p-color-bg-surface-hover: #21252f;
+      --p-color-bg-surface-active: #292e3a;
+      --p-color-bg-subdued: #14171d;
+      --p-color-bg-topbar: #14161c;
+      --p-color-bg-nav: #14161c;
+      --p-color-bg-nav-active: #232834;
+
+      /* Borders & Dividers */
+      --p-color-border: #2c323d;
+      --p-color-border-subtle: #20242d;
+      --p-color-border-dark: #4b5565;
+
+      /* Typography */
+      --p-color-text: #e6edf3;
+      --p-color-text-subdued: #8b949e;
+      --p-color-text-disabled: #656d76;
+      --p-color-text-inverse: #101216;
+
+      /* Brand & Primary Actions */
+      --p-color-primary: #2ea043;
+      --p-color-primary-hover: #3fb950;
+      --p-color-shopify-green: #2ea043;
+      --p-color-shopify-green-hover: #3fb950;
+      --p-color-shopify-green-light: rgba(46, 160, 67, 0.16);
+
+      /* Tones (Badges & Banners) */
+      --p-tone-success-bg: rgba(46, 160, 67, 0.16);
+      --p-tone-success-text: #3fb950;
+      --p-tone-success-border: rgba(46, 160, 67, 0.35);
+
+      --p-tone-warning-bg: rgba(210, 153, 34, 0.16);
+      --p-tone-warning-text: #e3b341;
+      --p-tone-warning-border: rgba(210, 153, 34, 0.35);
+
+      --p-tone-critical-bg: rgba(248, 81, 73, 0.16);
+      --p-tone-critical-text: #f85149;
+      --p-tone-critical-border: rgba(248, 81, 73, 0.35);
+
+      --p-tone-info-bg: rgba(56, 139, 253, 0.16);
+      --p-tone-info-text: #58a6ff;
+      --p-tone-info-border: rgba(56, 139, 253, 0.35);
+
+      --p-tone-neutral-bg: rgba(110, 118, 129, 0.18);
+      --p-tone-neutral-text: #c9d1d9;
+      --p-tone-neutral-border: rgba(110, 118, 129, 0.3);
+
+      --p-shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 2px 8px rgba(0, 0, 0, 0.45);
+      --p-shadow-popover: 0 4px 20px rgba(0, 0, 0, 0.65);
+      --p-shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    /* Dark Mode Component Adaptations */
+    [data-theme="dark"] code {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e6edf3;
+    }
+    [data-theme="dark"] ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.18);
+    }
+    [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.32);
+    }
+    [data-theme="dark"] a {
+      color: #58a6ff;
+    }
+    [data-theme="dark"] .nav-item {
+      color: var(--p-color-text);
+    }
+    [data-theme="dark"] .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+    [data-theme="dark"] .nav-item.active {
+      background-color: var(--p-color-bg-nav-active);
+      color: #ffffff;
+    }
+    [data-theme="dark"] .btn-primary:active {
+      background-color: #238636;
+    }
+    [data-theme="dark"] .btn-secondary {
+      background-color: #262a33;
+      color: var(--p-color-text);
+    }
+    [data-theme="dark"] .btn-secondary:hover {
+      background-color: #313742;
+      color: #ffffff;
+    }
+    [data-theme="dark"] .btn-secondary:active {
+      background-color: #3d4452;
+    }
+    [data-theme="dark"] .top-bar .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    [data-theme="dark"] .top-bar .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+    [data-theme="dark"] .top-bar .btn-secondary:active {
+      background-color: rgba(255, 255, 255, 0.28);
+    }
+    [data-theme="dark"] .btn-icon {
+      background-color: #262a33;
+      color: var(--p-color-text);
+    }
+    [data-theme="dark"] .btn-icon:hover {
+      background-color: #313742;
+      color: #ffffff;
+    }
+    [data-theme="dark"] .form-group .btn-icon {
+      background-color: #21252d;
+      color: var(--p-color-text-subdued);
+    }
+    [data-theme="dark"] .form-group .btn-icon:hover {
+      background-color: #2d323c;
+      color: var(--p-color-text);
+    }
+    [data-theme="dark"] .store-card:hover {
+      border-color: #3f4756;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+    [data-theme="dark"] .form-input {
+      background-color: #14171d;
+      border-color: #353b46;
+      color: var(--p-color-text);
+    }
+    [data-theme="dark"] .form-input:focus {
+      border-color: #388bfd;
+      box-shadow: 0 0 0 1px #388bfd;
+    }
+    [data-theme="dark"] .sheet-panel,
+    [data-theme="dark"] .sheet-header {
+      background-color: var(--p-color-bg-surface);
+    }
+    [data-theme="dark"] .sheet-prompt-banner {
+      background-color: rgba(210, 153, 34, 0.15);
+      border-bottom-color: rgba(210, 153, 34, 0.3);
+    }
+    [data-theme="dark"] .prompt-banner-head {
+      color: #f0b746;
+    }
+    [data-theme="dark"] #prompt-box-desc,
+    [data-theme="dark"] .sheet-prompt-banner label {
+      color: #d29922 !important;
+    }
+    [data-theme="dark"] .theme-radio-item {
+      border-color: var(--p-color-border);
+      background-color: var(--p-color-bg-surface);
+    }
+    [data-theme="dark"] .theme-radio-item:hover {
+      background-color: var(--p-color-bg-surface-hover);
+      border-color: var(--p-color-border-dark);
+    }
+    [data-theme="dark"] .theme-radio-item.selected {
+      background-color: rgba(56, 139, 253, 0.15);
+      border-color: #388bfd;
+    }
+    [data-theme="dark"] .store-domain-link:hover {
+      color: #58a6ff;
+    }
+    [data-theme="dark"] .toast-message {
+      background-color: #262a33;
+      color: #ffffff;
+      border: 1px solid var(--p-color-border);
+    }
+    [data-theme="dark"] .form-input::placeholder {
+      color: var(--p-color-text-disabled);
+    }
+    [data-theme="dark"] .theme-auth-card {
+      background-color: var(--p-color-bg-subdued);
+      border-color: var(--p-color-border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    [data-theme="dark"] .theme-auth-icon-badge {
+      background-color: rgba(56, 139, 253, 0.18);
+      color: #58a6ff;
+    }
+    [data-theme="dark"] .theme-auth-code-box {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: var(--p-color-border);
+    }
+    [data-theme="dark"] .theme-error-box {
+      background-color: var(--p-color-bg-subdued);
+      border-color: var(--p-color-border);
+    }
+
+    body, .app-sidebar, .app-main, .store-card, .metric-card, .top-bar, .modal-window, .sheet-panel {
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Reset & iOS G2 Continuous Corners (60% Corner Smoothing) */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      corner-shape: squircle;
+      corner-shape: superellipse(2);
+      -webkit-corner-shape: squircle;
+    }
+
+    code {
+      font-family: var(--p-font-mono);
+      font-size: 0.9em;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 1px 4px;
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+
+    /* Scrollbar Continuous Smooth Corners */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: var(--p-radius-full);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.32);
+    }
+
+    html, body {
+      height: 100%;
+      background-color: var(--p-color-bg);
+      color: var(--p-color-text);
+      font-family: var(--p-font-family);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: #005bd3;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       APP SHELL LAYOUT
+       ========================================================================== */
+    .app-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Polaris Top Bar */
+    .top-bar {
+      height: 56px;
+      background-color: var(--p-color-bg-topbar);
+      color: var(--p-color-text-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 50;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .top-bar-brand .brand-title-short {
+      display: none;
+    }
+
+    .btn-label-short {
+      display: none;
+    }
+
+    .top-bar-brand:hover {
+      text-decoration: none;
+      opacity: 0.95;
+    }
+
+    .brand-tag {
+      background-color: rgba(255, 255, 255, 0.14);
+      color: #e3e5e8;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: var(--p-radius-full);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      letter-spacing: 0.3px;
+    }
+
+    /* Search Bar in Top Bar */
+    .top-bar-center {
+      flex: 1;
+      max-width: 520px;
+      margin: 0 24px;
+    }
+
+    .top-search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .top-search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: #8c9196;
+      stroke-width: 2;
+      fill: none;
+      pointer-events: none;
+    }
+
+    .top-search-input {
+      width: 100%;
+      height: 34px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 0 34px 0 34px;
+      color: #ffffff;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: var(--p-transition);
+    }
+
+    .top-search-input::placeholder {
+      color: #8c9196;
+    }
+
+    .top-search-input:focus {
+      background-color: rgba(255, 255, 255, 0.18);
+      border-color: #005bd3;
+      box-shadow: 0 0 0 1px #005bd3;
+    }
+
+    .top-search-shortcut {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      color: #b5b9be;
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      font-family: var(--p-font-mono);
+      pointer-events: none;
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .server-status-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--p-radius-full);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: #d2d5d8;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--p-radius-full);
+      background-color: #32d74b;
+    }
+
+    .status-dot.pulsing {
+      box-shadow: 0 0 0 3px rgba(50, 215, 75, 0.35);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(50, 215, 75, 0.5); }
+      70% { box-shadow: 0 0 0 6px rgba(50, 215, 75, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(50, 215, 75, 0); }
+    }
+
+    /* App Body (Sidebar + Content) */
+    .app-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Polaris Sidebar Navigation */
+    .app-sidebar {
+      width: 240px;
+      background-color: var(--p-color-bg-nav);
+      border-right: 1px solid var(--p-color-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      user-select: none;
+      overflow: hidden;
+      transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .app-sidebar.collapsed {
+      width: 0 !important;
+      padding: 0;
+      border-right: none;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .app-sidebar-inner {
+      width: 240px;
+      min-width: 240px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    .sidebar-section {
+      padding: 16px 8px 8px;
+    }
+
+    .sidebar-heading {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--p-color-text-subdued);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 4px 12px 8px;
+      white-space: nowrap;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      color: var(--p-color-text);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      margin-bottom: 2px;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      text-decoration: none;
+      color: var(--p-color-text);
+    }
+
+    .nav-item.active {
+      background-color: var(--p-color-bg-nav-active);
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--p-color-border);
+      color: var(--p-color-text);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: var(--p-radius-full);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+
+    .nav-badge.running {
+      background: var(--p-color-shopify-green);
+      color: #ffffff;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 16px 12px;
+      border-top: 1px solid var(--p-color-border);
+      font-size: 12px;
+      color: var(--p-color-text-subdued);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Main Content Area */
+    .app-main {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 20px 24px 40px;
+      background-color: var(--p-color-bg);
+    }
+
+    .main-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Polaris Page Header */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .page-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .breadcrumb-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--p-color-text-subdued);
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--p-color-text);
+      letter-spacing: -0.2px;
+    }
+
+    .page-subtitle {
+      font-size: 13px;
+      color: var(--p-color-text-subdued);
+    }
+
+    .page-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       SOLID BUTTONS (NO BORDER, iOS G2 60% CONTINUOUS CORNERS)
+       ========================================================================== */
+    button, .btn {
+      border: none !important;
+      outline: none !important;
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: var(--p-radius-btn);
+      cursor: pointer;
+      transition: var(--p-transition);
+      white-space: nowrap;
+      user-select: none;
+      text-decoration: none;
+      box-shadow: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid #005bd3 !important;
+      outline-offset: 2px;
+    }
+
+    /* 纯色主操作按钮 (深色无边框) */
+    .btn-primary {
+      background-color: var(--p-color-primary);
+      color: #ffffff;
+      border: none !important;
+      box-shadow: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--p-color-primary-hover);
+      color: #ffffff;
+      border: none !important;
+    }
+
+    .btn-primary:active {
+      background-color: #000000;
+    }
+
+    /* 纯色 Shopify 绿操作按钮 (无边框) */
+    .btn-shopify {
+      background-color: var(--p-color-shopify-green);
+      color: #ffffff;
+      border: none !important;
+      box-shadow: none;
+    }
+
+    .btn-shopify:hover {
+      background-color: var(--p-color-shopify-green-hover);
+      color: #ffffff;
+      border: none !important;
+    }
+
+    .btn-shopify:active {
+      background-color: #00563f;
+    }
+
+    /* 纯色次级按钮 (灰色实心无边框) */
+    .btn-secondary {
+      background-color: #e4e5e7;
+      color: var(--p-color-text);
+      border: none !important;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d2d5d8;
+      color: #000000;
+      border: none !important;
+      text-decoration: none;
+    }
+
+    .btn-secondary:active {
+      background-color: #c4c8cc;
+    }
+
+    /* 纯色危险/终止按钮 (红色无边框) */
+    .btn-critical {
+      background-color: #d82c0d;
+      color: #ffffff;
+      border: none !important;
+      box-shadow: none;
+    }
+
+    .btn-critical:hover {
+      background-color: #bc2200;
+      color: #ffffff;
+      border: none !important;
+    }
+
+    .btn-critical:active {
+      background-color: #9e1c00;
+    }
+
+    .btn-sm {
+      padding: 5px 11px;
+      font-size: 12px;
+      border-radius: var(--p-radius-btn-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+
+    /* 纯色图标按钮 (无边框) */
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: var(--p-radius-btn-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      color: var(--p-color-text);
+      background-color: #e4e5e7;
+      border: none !important;
+      cursor: pointer;
+      transition: var(--p-transition);
+      box-shadow: none;
+    }
+
+    .btn-icon:hover {
+      background-color: #d2d5d8;
+      color: #000000;
+      border: none !important;
+    }
+
+    .btn-icon:active {
+      background-color: #c4c8cc;
+    }
+
+    /* 顶栏深色环境下的图标按钮 */
+    .top-bar .btn-icon {
+      background-color: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: none !important;
+    }
+
+    .top-bar .btn-icon:hover {
+      background-color: rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+      border: none !important;
+    }
+
+    .top-bar .btn-icon:active {
+      background-color: rgba(255, 255, 255, 0.32);
+    }
+
+    /* 纯色危险图标按钮 (无边框) */
+    .btn-icon-danger {
+      background-color: var(--p-tone-critical-bg);
+      color: #d82c0d;
+      border: none !important;
+    }
+
+    .btn-icon-danger:hover {
+      color: #bc2200 !important;
+      background-color: #fed3d1 !important;
+      border: none !important;
+    }
+
+    .btn-icon-danger:active {
+      background-color: #fbb6b4 !important;
+    }
+
+    /* 表单内部的密码显隐等图标按钮 */
+    .form-group .btn-icon {
+      background-color: #f1f2f4;
+      color: var(--p-color-text-subdued);
+    }
+
+    .form-group .btn-icon:hover {
+      background-color: #e4e5e7;
+      color: var(--p-color-text);
+    }
+
+    /* ==========================================================================
+       METRIC CARDS (OVERVIEW SUMMARY)
+       ========================================================================== */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .metric-card {
+      background-color: var(--p-color-bg-surface);
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 14px 16px;
+      box-shadow: var(--p-shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--p-color-text-subdued);
+      font-weight: 500;
+    }
+
+    .metric-val-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--p-color-text);
+      line-height: 1.1;
+    }
+
+    .metric-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--p-radius-full);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+
+    /* ==========================================================================
+       POLARIS STORE GRID (宫格视图)
+       ========================================================================== */
+    .stores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+    }
+
+    /* List View (列表视图) */
+    .stores-grid.list-view {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stores-grid.list-view .store-card {
+      padding: 12px 18px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stores-grid.list-view .store-card-header {
+      flex: 1 1 260px;
+      min-width: 220px;
+      align-items: center;
+    }
+
+    .stores-grid.list-view .store-card-dir {
+      flex: 1 1 240px;
+      min-width: 200px;
+      max-width: 360px;
+    }
+
+    .stores-grid.list-view .store-card-footer {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+      flex: 0 0 auto;
+      justify-content: flex-end;
+    }
+
+    /* View Switcher (宫格 / 列表视图切换) */
+    .view-switcher {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--p-color-bg-nav);
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-btn-sm);
+      padding: 2px;
+      gap: 2px;
+      user-select: none;
+    }
+
+    .view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--p-color-text-subdued);
+      background: transparent;
+      border: none;
+      border-radius: calc(var(--p-radius-btn-sm) - 2px);
+      cursor: pointer;
+      transition: var(--p-transition);
+    }
+
+    .view-btn:hover {
+      color: var(--p-color-text);
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] .view-btn:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .view-btn.active {
+      background-color: var(--p-color-bg-surface);
+      color: var(--p-color-text);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .view-btn .icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Section Title Actions Container */
+    .section-title-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Custom Sort Dropdown (Polaris Popover 风格自定义下拉菜单) */
+    .sort-dropdown-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+    }
+
+    .sort-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 28px;
+      padding: 0 10px;
+      background-color: var(--p-color-bg-nav);
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-btn-sm);
+      color: var(--p-color-text);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: var(--p-transition);
+    }
+
+    .sort-dropdown-trigger:hover {
+      background-color: var(--p-color-bg-surface-hover);
+      border-color: var(--p-color-border-dark);
+    }
+
+    [data-theme="dark"] .sort-dropdown-trigger:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .sort-dropdown-trigger.active {
+      background-color: var(--p-color-bg-surface);
+      border-color: var(--p-color-shopify-green);
+      box-shadow: 0 0 0 1px var(--p-color-shopify-green), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .sort-dropdown-trigger .sort-icon {
+      width: 13px;
+      height: 13px;
+      stroke: var(--p-color-text-subdued);
+      flex-shrink: 0;
+      transition: var(--p-transition);
+    }
+
+    .sort-dropdown-trigger:hover .sort-icon,
+    .sort-dropdown-trigger.active .sort-icon {
+      stroke: var(--p-color-text);
+    }
+
+    .sort-dropdown-trigger .sort-current-label {
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .sort-dropdown-trigger .sort-arrow {
+      width: 12px;
+      height: 12px;
+      stroke: var(--p-color-text-subdued);
+      flex-shrink: 0;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sort-dropdown-trigger.active .sort-arrow {
+      transform: rotate(180deg);
+      stroke: var(--p-color-text);
+    }
+
+    /* Popover Menu Window */
+    .sort-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 200px;
+      background-color: var(--p-color-bg-surface);
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-md);
+      box-shadow: var(--p-shadow-popover);
+      padding: 6px;
+      z-index: 100;
+      display: none;
+      opacity: 0;
+      transform: translateY(-6px) scale(0.98);
+      transform-origin: top right;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .sort-dropdown-menu.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .sort-menu-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--p-color-text-subdued);
+      padding: 4px 8px 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .sort-menu-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .sort-menu-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--p-color-text-subdued);
+      padding: 4px 8px 2px;
+    }
+
+    .sort-menu-divider {
+      height: 1px;
+      background-color: var(--p-color-border-subtle);
+      margin: 4px 4px;
+    }
+
+    .sort-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 6px 8px;
+      background: transparent;
+      border: none;
+      border-radius: calc(var(--p-radius-btn-sm) - 4px);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--p-color-text);
+      text-align: left;
+      cursor: pointer;
+      transition: var(--p-transition);
+    }
+
+    .sort-menu-item:hover {
+      background-color: var(--p-color-bg-surface-hover);
+      color: var(--p-color-text);
+    }
+
+    [data-theme="dark"] .sort-menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .sort-menu-item.selected {
+      background-color: var(--p-color-shopify-green-light);
+      color: var(--p-color-shopify-green);
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .sort-menu-item.selected {
+      background-color: rgba(46, 160, 67, 0.2);
+      color: #3fb950;
+    }
+
+    .sort-menu-item .check-icon {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .sort-menu-item.selected .check-icon {
+      opacity: 1;
+    }
+
+    .sort-menu-footer {
+      padding: 6px 8px 4px;
+      font-size: 11px;
+      color: var(--p-color-text-subdued);
+      border-top: 1px solid var(--p-color-border-subtle);
+      margin-top: 4px;
+    }
+
+    /* Pin button & Card Pinned State */
+    .btn-pin {
+      transition: var(--p-transition);
+    }
+
+    .btn-pin.pinned {
+      color: #b45309 !important;
+      background-color: var(--p-tone-warning-bg) !important;
+    }
+
+    [data-theme="dark"] .btn-pin.pinned {
+      color: #f59e0b !important;
+      background-color: rgba(210, 153, 34, 0.2) !important;
+    }
+
+    .store-card.is-pinned {
+      border-color: rgba(210, 153, 34, 0.55);
+      box-shadow: 0 0 0 1px rgba(210, 153, 34, 0.25), var(--p-shadow-card);
+    }
+
+    .store-card {
+      background-color: var(--p-color-bg-surface);
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-lg);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      box-shadow: var(--p-shadow-card);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: var(--p-transition);
+      position: relative;
+    }
+
+    .store-card:hover {
+      border-color: #c9cccf;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+      transform: translateY(-1px);
+    }
+
+    .store-card.running {
+      border-color: var(--p-color-shopify-green);
+      box-shadow: 0 0 0 1px var(--p-color-shopify-green), 0 4px 12px rgba(0, 128, 96, 0.12);
+    }
+
+    .store-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .store-card-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .store-card-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--p-color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .store-card-tools {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .store-card-domain {
+      display: flex;
+      align-items: center;
+    }
+
+    .store-domain-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+      color: var(--p-color-text-subdued);
+      font-family: var(--p-font-mono);
+      text-decoration: none;
+      transition: var(--p-transition);
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .store-domain-link:hover {
+      color: #005bd3;
+      text-decoration: underline;
+    }
+
+    .card-dir-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background-color: var(--p-color-bg-subdued);
+      border: 1px solid var(--p-color-border-subtle);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      cursor: pointer;
+      transition: var(--p-transition);
+      user-select: none;
+    }
+
+    .card-dir-box:hover {
+      background-color: var(--p-color-bg-surface-hover);
+      border-color: var(--p-color-border);
+    }
+
+    .card-dir-box .dir-icon {
+      width: 15px;
+      height: 15px;
+      color: var(--p-color-text-subdued);
+      flex-shrink: 0;
+    }
+
+    .card-dir-box .dir-path-text {
+      flex: 1;
+      min-width: 0;
+      font-family: var(--p-font-mono);
+      font-size: 11.5px;
+      color: var(--p-color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-dir-box .copy-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--p-color-text-subdued);
+      opacity: 0.6;
+      flex-shrink: 0;
+      transition: var(--p-transition);
+    }
+
+    .card-dir-box:hover .copy-icon {
+      opacity: 1;
+      color: var(--p-color-text);
+    }
+
+    .card-dir-box.unbound {
+      border-style: dashed;
+      color: var(--p-color-text-subdued);
+    }
+
+    .card-dir-box.unbound .dir-path-text {
+      color: var(--p-color-text-subdued);
+      font-family: inherit;
+      font-style: italic;
+    }
+
+    .store-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: nowrap;
+      margin-top: 4px;
+      padding-top: 12px;
+      border-top: 1px solid var(--p-color-border-subtle);
+    }
+
+    .card-action-primary {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .card-action-primary > button:first-child {
+      min-width: 94px;
+      justify-content: center;
+    }
+
+    .card-action-secondary {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* Polaris Badges */
+    .polaris-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: var(--p-radius-full);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .polaris-badge-success {
+      background-color: var(--p-tone-success-bg);
+      color: var(--p-tone-success-text);
+      border-color: var(--p-tone-success-border);
+    }
+
+    .polaris-badge-warning {
+      background-color: var(--p-tone-warning-bg);
+      color: var(--p-tone-warning-text);
+      border-color: var(--p-tone-warning-border);
+      cursor: pointer;
+    }
+
+    .polaris-badge-critical {
+      background-color: var(--p-tone-critical-bg);
+      color: var(--p-tone-critical-text);
+      border-color: var(--p-tone-critical-border);
+    }
+
+    .polaris-badge-neutral {
+      background-color: var(--p-tone-neutral-bg);
+      color: var(--p-tone-neutral-text);
+      border-color: var(--p-tone-neutral-border);
+    }
+
+    /* Row inline prompt warning */
+    .row-banner {
+      background-color: var(--p-tone-warning-bg);
+      border: 1px solid var(--p-tone-warning-border);
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 6px 12px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--p-tone-warning-text);
+    }
+
+    .row-actions-cluster {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Empty state */
+    .empty-state-box {
+      padding: 56px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      border-radius: var(--p-radius-lg);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+    }
+
+    .empty-state-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--p-color-text-subdued);
+      margin-bottom: 4px;
+    }
+
+    .empty-state-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--p-color-text);
+    }
+
+    .empty-state-desc {
+      font-size: 13px;
+      color: var(--p-color-text-subdued);
+      max-width: 420px;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       QUICK COMMANDS (快速命令与微服务)
+       ========================================================================== */
+    .quick-commands-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .section-title-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--p-color-text);
+      letter-spacing: -0.2px;
+      margin: 0;
+    }
+
+    .section-icon-wrap {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      background: var(--p-color-bg-nav-active);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--p-color-text);
+    }
+
+    .section-icon-wrap svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+    }
+
+    .command-code-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background-color: var(--p-color-bg-subdued);
+      border: 1px solid var(--p-color-border-subtle);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      cursor: pointer;
+      transition: var(--p-transition);
+      user-select: none;
+    }
+
+    .command-code-box:hover {
+      background-color: var(--p-color-bg-surface-hover);
+      border-color: var(--p-color-border);
+    }
+
+    .command-prompt-symbol {
+      font-family: var(--p-font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--p-color-shopify-green);
+      flex-shrink: 0;
+    }
+
+    .command-code-text {
+      flex: 1;
+      min-width: 0;
+      font-family: var(--p-font-mono);
+      font-size: 12px;
+      color: var(--p-color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+    }
+
+    .command-code-box .copy-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--p-color-text-subdued);
+      opacity: 0.6;
+      flex-shrink: 0;
+      transition: var(--p-transition);
+    }
+
+    .command-code-box:hover .copy-icon {
+      opacity: 1;
+      color: var(--p-color-text);
+    }
+
+    /* ==========================================================================
+       POLARIS MODAL DIALOGS
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-window {
+      background-color: var(--p-color-bg-surface);
+      border-radius: var(--p-radius-lg);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      box-shadow: var(--p-shadow-modal);
+      width: 100%;
+      max-width: 560px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: modalEnter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalEnter {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--p-color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--p-color-text);
+    }
+
+    .modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-height: calc(85vh - 120px);
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--p-color-border);
+      background-color: var(--p-color-bg-subdued);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* Polaris Form Layout */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--p-color-text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-input {
+      height: 36px;
+      border: 1px solid var(--p-color-border-dark);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 0 12px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--p-color-text);
+      outline: none;
+      transition: var(--p-transition);
+      background-color: #ffffff;
+    }
+
+    .form-input:focus {
+      border-color: #005bd3;
+      box-shadow: 0 0 0 1px #005bd3;
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: var(--p-color-text-disabled);
+      line-height: 1.35;
+      margin-top: -1px;
+      margin-bottom: 2px;
+    }
+
+    /* ==========================================================================
+       POLARIS DRAWER / SHEET (TERMINAL REALTIME STREAM)
+       ========================================================================== */
+    .sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 90;
+      display: none;
+    }
+
+    .sheet-overlay.active {
+      display: block;
+    }
+
+    .sheet-panel {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: min(620px, 92vw);
+      background-color: #ffffff;
+      border-top-left-radius: var(--p-radius-lg);
+      border-bottom-left-radius: var(--p-radius-lg);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.16);
+      z-index: 95;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .sheet-panel.active {
+      transform: translateX(0);
+    }
+
+    .sheet-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--p-color-border);
+      border-top-left-radius: var(--p-radius-lg);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ffffff;
+    }
+
+    .sheet-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sheet-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--p-color-text);
+    }
+
+    .terminal-container {
+      flex: 1;
+      background-color: #1a1a1a;
+      color: #d2d5d8;
+      font-family: var(--p-font-mono);
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 16px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .terminal-container a {
+      color: #64d2ff;
+      text-decoration: underline;
+    }
+
+    .sheet-prompt-banner {
+      background-color: #fffbf0;
+      border-bottom: 1px solid #f6d88c;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prompt-banner-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #7a4300;
+    }
+
+    .sheet-footer {
+      padding: 10px 20px;
+      border-top: 1px solid var(--p-color-border);
+      background-color: var(--p-color-bg-subdued);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--p-color-text-subdued);
+    }
+
+    /* Polaris Warning Banner (Inside Modal) */
+    .polaris-banner {
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .polaris-banner-critical {
+      background-color: var(--p-tone-critical-bg);
+      border: 1px solid var(--p-tone-critical-border);
+      color: var(--p-tone-critical-text);
+    }
+
+    .polaris-banner-title {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Theme Select Cards inside modal */
+    .theme-select-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .theme-radio-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      cursor: pointer;
+      transition: var(--p-transition);
+    }
+
+    .theme-radio-item:hover {
+      background-color: var(--p-color-bg-surface-hover);
+      border-color: var(--p-color-border-dark);
+    }
+
+    .theme-radio-item.selected {
+      background-color: #f0f7ff;
+      border-color: #005bd3;
+    }
+
+    .theme-radio-item input[type="radio"] {
+      accent-color: var(--p-color-shopify-green);
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+    }
+
+    .theme-auth-card {
+      background-color: var(--p-color-bg-subdued);
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 20px;
+      text-align: left;
+      max-width: 520px;
+      margin: 0 auto 16px;
+      box-shadow: var(--p-shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .theme-auth-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .theme-auth-icon-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      background-color: var(--p-tone-info-bg);
+      color: var(--p-tone-info-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .theme-auth-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .theme-auth-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--p-color-text);
+      line-height: 1.4;
+    }
+
+    .theme-auth-desc {
+      font-size: 12px;
+      color: var(--p-color-text-subdued);
+      line-height: 1.5;
+    }
+
+    .theme-auth-code-box {
+      background-color: var(--p-color-bg-surface);
+      border: 1px solid var(--p-color-border-subtle);
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .theme-auth-code-label {
+      font-size: 11px;
+      color: var(--p-color-text-subdued);
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+
+    .theme-auth-code-val {
+      font-family: var(--p-font-mono);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--p-color-text);
+    }
+
+    .theme-auth-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .theme-auth-btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border-radius: var(--p-radius-btn);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      width: 100%;
+    }
+
+    .theme-auth-url-row {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--p-color-text-subdued);
+      word-break: break-all;
+      line-height: 1.4;
+      padding: 0 4px;
+    }
+
+    .theme-auth-link {
+      color: var(--p-tone-info-text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      word-break: break-all;
+      transition: var(--p-transition);
+    }
+
+    .theme-auth-link:hover {
+      opacity: 0.8;
+    }
+
+    .theme-error-box {
+      font-size: 12px;
+      color: var(--p-color-text-subdued);
+      max-width: 500px;
+      margin: 0 auto 14px;
+      word-break: break-word;
+      line-height: 1.5;
+      text-align: left;
+      background-color: var(--p-color-bg-subdued);
+      padding: 12px 16px;
+      border-radius: var(--p-radius-sm);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      border: 1px solid var(--p-color-border-subtle);
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-message {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: var(--p-radius-md);
+      corner-shape: squircle;
+      -webkit-corner-shape: squircle;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: var(--p-shadow-popover);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
+    .toast-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Helper SVG Icon */
+    .icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Mobile Action Sheet (移动端底部操作与详情抽屉) */
+    .btn-mobile-more {
+      display: none;
+    }
+
+    .action-sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 140;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      backdrop-filter: blur(2px);
+    }
+
+    .action-sheet-backdrop.active {
+      display: flex;
+    }
+
+    .action-sheet-window {
+      background-color: var(--p-color-bg-surface);
+      width: 100%;
+      max-width: 520px;
+      border-radius: var(--p-radius-lg) var(--p-radius-lg) 0 0;
+      border: 1px solid var(--p-color-border);
+      border-bottom: none;
+      box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      max-height: 85vh;
+      animation: slideUpSheet 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    @keyframes slideUpSheet {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .action-sheet-header {
+      padding: 14px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--p-color-border-subtle);
+      background-color: var(--p-color-bg-surface);
+      flex-shrink: 0;
+    }
+
+    .action-sheet-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .action-sheet-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--p-color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .action-sheet-body {
+      padding: 14px 18px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .action-sheet-info-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background-color: var(--p-color-bg-subdued);
+      border: 1px solid var(--p-color-border-subtle);
+      border-radius: var(--p-radius-md);
+      padding: 10px 12px;
+    }
+
+    .action-sheet-info-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12.5px;
+    }
+
+    .action-sheet-info-label {
+      color: var(--p-color-text-subdued);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .action-sheet-info-val {
+      font-family: var(--p-font-mono);
+      font-size: 12px;
+      color: var(--p-color-text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: right;
+      flex: 1;
+    }
+
+    .action-sheet-btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .action-sheet-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      border-radius: var(--p-radius-btn);
+      cursor: pointer;
+      border: 1px solid var(--p-color-border);
+      background-color: var(--p-color-bg-surface);
+      color: var(--p-color-text);
+      transition: var(--p-transition);
+      user-select: none;
+    }
+
+    .action-sheet-btn:hover {
+      background-color: var(--p-color-bg-surface-hover);
+    }
+
+    .action-sheet-btn-primary {
+      background-color: var(--p-color-shopify-green);
+      color: #ffffff;
+      border: none;
+    }
+
+    .action-sheet-btn-primary:hover {
+      background-color: var(--p-color-shopify-green-hover);
+    }
+
+    .action-sheet-btn-critical {
+      background-color: var(--p-tone-critical-bg);
+      color: var(--p-tone-critical-text);
+      border-color: rgba(215, 44, 13, 0.2);
+    }
+
+    [data-theme="dark"] .action-sheet-btn {
+      background-color: #262626;
+      border-color: #383838;
+      color: var(--p-color-text);
+    }
+
+    [data-theme="dark"] .action-sheet-btn:hover {
+      background-color: #303030;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .app-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        z-index: 120;
+        transform: translateX(-100%);
+        transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s ease, visibility 0.24s ease;
+        display: flex;
+        box-shadow: none;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .app-sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+        visibility: visible;
+        pointer-events: auto;
+      }
+      .app-sidebar-inner {
+        width: 260px;
+        min-width: 260px;
+      }
+      .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+        z-index: 110;
+        display: none;
+        backdrop-filter: blur(2px);
+      }
+      .sidebar-backdrop.active {
+        display: block;
+      }
+      .metric-grid { grid-template-columns: repeat(2, 1fr); }
+      .app-main { padding: 16px; }
+      .top-bar-center { max-width: 280px; }
+    }
+
+    @media (max-width: 600px) {
+      .top-bar {
+        padding: 0 10px;
+        gap: 8px;
+      }
+      .top-bar-left {
+        gap: 6px;
+      }
+      .top-bar-brand {
+        font-size: 14px;
+        gap: 6px;
+      }
+      .top-bar-right {
+        gap: 6px;
+      }
+      .top-bar-right .btn-label {
+        display: none;
+      }
+      .top-bar-right .btn {
+        padding: 6px 8px;
+      }
+      .top-bar-right #top-add-cmd-btn {
+        display: none;
+      }
+      .top-bar-right .btn-shopify .btn-label-full {
+        display: none;
+      }
+      .top-bar-right .btn-shopify .btn-label-short {
+        display: inline;
+      }
+      /* 概览指标卡片在移动端合并为单一聚合卡片 */
+      .metric-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0 !important;
+        background: var(--p-color-bg-surface) !important;
+        border: 1px solid var(--p-color-border) !important;
+        border-radius: var(--p-radius-lg) !important;
+        box-shadow: var(--p-shadow-card) !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+      }
+      .metric-card {
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 10px 12px !important;
+        background: transparent !important;
+      }
+      .metric-card:nth-child(1) {
+        border-bottom: 1px solid var(--p-color-border-subtle) !important;
+        border-right: 1px solid var(--p-color-border-subtle) !important;
+      }
+      .metric-card:nth-child(2) {
+        border-bottom: 1px solid var(--p-color-border-subtle) !important;
+      }
+      .metric-card:nth-child(3) {
+        border-right: 1px solid var(--p-color-border-subtle) !important;
+      }
+      .metric-card .metric-label {
+        font-size: 11px !important;
+        margin-bottom: 2px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .metric-card .metric-value {
+        font-size: 18px !important;
+        line-height: 1.2 !important;
+      }
+      .metric-card .metric-badge {
+        font-size: 10px !important;
+        padding: 1px 4px !important;
+      }
+
+      .page-header { flex-direction: column; gap: 12px; }
+      .top-bar-center { display: none; }
+      .app-main {
+        padding: 12px;
+        overflow-x: hidden;
+      }
+      .main-container {
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+      }
+      .section-title-bar {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      /* 移动端宫格为一列2个 */
+      .stores-grid:not(.list-view), .commands-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .store-card {
+        padding: 10px !important;
+        gap: 8px !important;
+        border-radius: var(--p-radius-md) !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+      }
+      .store-card-name {
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+      }
+      .store-domain-link {
+        font-size: 11px !important;
+      }
+      /* 移动端隐藏过多冗余信息与次要按钮，统一通过「更多」弹窗展示 */
+      .store-card-tools {
+        display: none !important;
+      }
+      .store-card-dir {
+        display: none !important;
+      }
+      .command-code-box, .commands-grid .card-dir-box {
+        display: none !important;
+      }
+      .card-action-secondary {
+        display: none !important;
+      }
+      .card-action-primary .btn-admin-link {
+        display: none !important;
+      }
+      .store-card-footer {
+        margin-top: 0 !important;
+        padding-top: 8px !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 6px !important;
+        width: 100% !important;
+      }
+      .card-action-primary {
+        display: flex !important;
+        width: 100% !important;
+        gap: 6px !important;
+        flex-shrink: 1 !important;
+      }
+      .card-action-primary > button, .card-action-primary > a {
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding: 5px 6px !important;
+        font-size: 11.5px !important;
+        height: 28px !important;
+        gap: 4px !important;
+      }
+      .btn-mobile-more {
+        display: inline-flex !important;
+        flex: 0 0 28px !important;
+        width: 28px !important;
+        height: 28px !important;
+        padding: 0 !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .sheet-panel {
+        width: 100vw;
+        border-radius: 0;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .top-bar-brand .brand-title-full {
+        display: none;
+      }
+      .top-bar-brand .brand-title-short {
+        display: inline;
+      }
+      .server-status-pill .status-pill-text {
+        display: none;
+      }
+      .server-status-pill {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-frame">
+    <!-- ==========================================
+         POLARIS TOP BAR
+         ========================================== -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="btn-icon" style="color: #ffffff; padding: 6px; margin-right: 2px;" onclick="toggleSidebar()" title="展开 / 收起侧栏">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a class="top-bar-brand" onclick="fetchStores(true)">
+          <!-- Authentic Shopify Bag Icon -->
+          <svg width="22" height="25" viewBox="0 308 151 172" fill="none" style="flex-shrink: 0;">
+            <path fill="#95BF47" d="M131.5 341.9c-.1-.9-.9-1.3-1.5-1.3s-13.7-1-13.7-1-9.1-9.1-10.2-10c-1-1-2.9-.7-3.7-.5-.1 0-2 .6-5.1 1.6-3.1-8.9-8.4-17-17.9-17h-.9c-2.6-3.4-6-5-8.8-5-22 0-32.6 27.5-35.9 41.5-8.6 2.7-14.7 4.5-15.4 4.8-4.8 1.5-4.9 1.6-5.5 6.1-.5 3.4-13 100.1-13 100.1l97.3 18.2L150 468c.1-.2-18.4-125.2-18.5-126.1zm-39.6-9.8c-2.4.7-5.3 1.6-8.2 2.6v-1.8c0-5.4-.7-9.8-2-13.3 5 .6 8.1 6.1 10.2 12.5zm-16.3-11.4c1.3 3.4 2.2 8.2 2.2 14.8v1c-5.4 1.7-11.1 3.4-17 5.3 3.3-12.6 9.6-18.8 14.8-21.1zm-6.4-6.2c1 0 2 .4 2.8 1-7.1 3.3-14.6 11.6-17.7 28.4-4.7 1.5-9.2 2.8-13.5 4.2 3.6-12.8 12.6-33.6 28.4-33.6z"/>
+            <path fill="#5E8E3E" d="M130 340.4c-.6 0-13.7-1-13.7-1s-9.1-9.1-10.2-10c-.4-.4-.9-.6-1.3-.6l-7.3 150.6 52.8-11.4s-18.5-125.2-18.6-126.1c-.4-.9-1.1-1.3-1.7-1.5z"/>
+            <path fill="#FFF" d="M79.4 369.6L73 388.9s-5.8-3.1-12.7-3.1c-10.3 0-10.8 6.5-10.8 8.1 0 8.8 23 12.2 23 32.9 0 16.3-10.3 26.8-24.2 26.8-16.8 0-25.2-10.4-25.2-10.4l4.5-14.8s8.8 7.6 16.2 7.6c4.9 0 6.9-3.8 6.9-6.6 0-11.5-18.8-12-18.8-31 0-15.9 11.4-31.3 34.5-31.3 8.6-.1 13 2.5 13 2.5z"/>
+          </svg>
+          <span class="brand-title-full">Shopify Theme Manager</span>
+          <span class="brand-title-short">Theme Manager</span>
+        </a>
+      </div>
+
+      <div class="top-bar-center">
+        <div class="top-search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="top-search-input" class="top-search-input" placeholder="搜索商店名称或 myshopify 域名..." oninput="onSearchInput()">
+          <span class="top-search-shortcut">/</span>
+        </div>
+      </div>
+
+      <div class="top-bar-right">
+        <div class="server-status-pill" title="本地管理服务状态">
+          <div class="status-dot" id="server-status-dot"></div>
+          <span class="status-pill-text">端口 9290 在线</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" id="theme-toggle-btn" title="切换暗色/明亮模式">
+          <svg class="icon" viewBox="0 0 24 24" id="theme-toggle-icon">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="theme-toggle-text" class="btn-label">暗色模式</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="fetchStores(true)" id="top-sync-btn" title="立即同步后端状态">
+          <svg class="icon" viewBox="0 0 24 24" id="refresh-icon">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M21 21v-5h-5"></path>
+          </svg>
+          <span class="btn-label">同步状态</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="openAddCommandModal()" id="top-add-cmd-btn" title="添加可自定义目录与命令的快速执行项">
+          <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span class="btn-label">添加快速命令</span>
+        </button>
+        <button class="btn btn-shopify btn-sm" onclick="openAddModal()">
+          <span class="btn-label-full">+ 添加商店</span>
+          <span class="btn-label-short">+ 商店</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <div id="sidebar-backdrop" class="sidebar-backdrop" onclick="closeMobileSidebar()"></div>
+      <!-- ==========================================
+           POLARIS NAVIGATION SIDEBAR
+           ========================================== -->
+      <aside class="app-sidebar">
+        <div class="app-sidebar-inner">
+          <div class="sidebar-section">
+            <div class="sidebar-heading">工程与服务</div>
+            <a class="nav-item active" id="nav-item-all" onclick="setFilterTab('all')">
+              <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+              <span>主题工程列表</span>
+              <span class="nav-badge" id="nav-badge-total">0</span>
+            </a>
+            <a class="nav-item" id="nav-item-running" onclick="setFilterTab('running')">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>运行中 Dev 任务</span>
+              <span class="nav-badge" id="nav-badge-running">0</span>
+            </a>
+            <a class="nav-item" id="nav-item-commands" onclick="setFilterTab('commands')">
+              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <span>快速命令服务</span>
+              <span class="nav-badge" id="nav-badge-commands">0</span>
+            </a>
+          </div>
+
+          <div class="sidebar-footer">
+            <div>本地服务：<code>127.0.0.1:9290</code></div>
+            <div>驱动内核：Shopify CLI v3+</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ==========================================
+           MAIN ADMIN CONTENT AREA
+           ========================================== -->
+      <main class="app-main">
+        <div class="main-container">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <h1 class="page-title">主题工程管理</h1>
+          </div>
+
+          <!-- Polaris Metric Cards Overview -->
+          <div class="metric-grid">
+            <div class="metric-card">
+              <span class="metric-label">托管商店总数</span>
+              <div class="metric-val-row">
+                <span class="metric-value" id="stat-total-stores">0</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">正在运行 Dev 进程</span>
+              <div class="metric-val-row">
+                <span class="metric-value" id="stat-active-dev" style="color: var(--p-color-shopify-green);">0</span>
+                <span class="metric-badge polaris-badge-success" id="stat-active-badge" style="display: none;">0 运行中</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">已绑定本地目录</span>
+              <div class="metric-val-row">
+                <span class="metric-value" id="stat-bound-dirs">0</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">CLI 凭证拦截状态</span>
+              <div class="metric-val-row">
+                <span class="metric-value" id="stat-pending-prompts">0</span>
+                <span class="metric-badge polaris-badge-warning" id="stat-prompts-badge" style="display: none;">待处理</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Commands Section (快速命令与辅助服务) -->
+          <div id="quick-commands-section" class="quick-commands-section">
+            <div class="section-title-bar">
+              <div class="section-title-left">
+                <div class="section-icon-wrap">
+                  <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <h2 class="section-heading">快速命令与辅助服务</h2>
+                <span class="nav-badge" id="commands-stat-badge">0</span>
+                <span class="polaris-badge polaris-badge-success" id="commands-running-badge" style="display: none;">0 运行中</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="openAddCommandModal()">
+                <span>+ 新建命令</span>
+              </button>
+            </div>
+            <div class="commands-grid" id="commands-grid">
+              <!-- 动态由 JS 渲染 -->
+            </div>
+          </div>
+
+          <!-- Section Title for Themes -->
+          <div class="section-title-bar" id="stores-section-title" style="margin-top: 8px;">
+            <div class="section-title-left">
+              <h2 class="section-heading">Shopify 主题工程</h2>
+              <span class="nav-badge" id="stores-stat-badge">0</span>
+            </div>
+            <div class="section-title-actions">
+              <div class="view-switcher" role="group" aria-label="视图切换">
+                <button class="view-btn active" id="view-mode-grid" onclick="setStoreViewMode('grid')" title="切换至宫格视图">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  <span>宫格</span>
+                </button>
+                <button class="view-btn" id="view-mode-list" onclick="setStoreViewMode('list')" title="切换至列表视图">
+                  <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                  <span>列表</span>
+                </button>
+              </div>
+              <div class="sort-dropdown-wrap" id="store-sort-dropdown-wrap">
+                <button type="button" class="sort-dropdown-trigger" id="store-sort-trigger" onclick="toggleSortDropdown(event)" aria-haspopup="true" aria-expanded="false" title="选择排序方式（置顶商店始终固定在顶层）">
+                  <svg class="sort-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="14" y2="12"></line>
+                    <line x1="4" y1="18" x2="8" y2="18"></line>
+                  </svg>
+                  <span class="sort-current-label" id="store-sort-label">添加时间 (最新)</span>
+                  <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="sort-dropdown-menu" id="store-sort-menu" role="menu" aria-label="排序选项">
+                  <div class="sort-menu-header">排序方式</div>
+                  <div class="sort-menu-group">
+                    <button type="button" class="sort-menu-item" data-sort="created_desc" onclick="selectSortMode('created_desc')">
+                      <span>添加时间 (最新)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                    <button type="button" class="sort-menu-item" data-sort="created_asc" onclick="selectSortMode('created_asc')">
+                      <span>添加时间 (最早)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                  </div>
+                  <div class="sort-menu-divider"></div>
+                  <div class="sort-menu-group">
+                    <button type="button" class="sort-menu-item" data-sort="updated_desc" onclick="selectSortMode('updated_desc')">
+                      <span>编辑时间 (最新)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                    <button type="button" class="sort-menu-item" data-sort="updated_asc" onclick="selectSortMode('updated_asc')">
+                      <span>编辑时间 (最早)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                  </div>
+                  <div class="sort-menu-divider"></div>
+                  <div class="sort-menu-group">
+                    <button type="button" class="sort-menu-item" data-sort="used_desc" onclick="selectSortMode('used_desc')">
+                      <span>使用时间 (最新)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                    <button type="button" class="sort-menu-item" data-sort="used_asc" onclick="selectSortMode('used_asc')">
+                      <span>使用时间 (最早)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                  </div>
+                  <div class="sort-menu-divider"></div>
+                  <div class="sort-menu-group">
+                    <button type="button" class="sort-menu-item" data-sort="name_asc" onclick="selectSortMode('name_asc')">
+                      <span>名称 (A - Z)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                    <button type="button" class="sort-menu-item" data-sort="name_desc" onclick="selectSortMode('name_desc')">
+                      <span>名称 (Z - A)</span>
+                      <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                  </div>
+                  <div class="sort-menu-footer">置顶商店始终固定在顶层</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Store Grid (宫格视图) -->
+          <div class="stores-grid" id="stores-grid">
+            <!-- 动态由 JS 渲染 -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="empty-state-view" class="empty-state-box" style="display: none; background: var(--p-color-bg-surface); border-radius: var(--p-radius-lg); corner-shape: squircle; -webkit-corner-shape: squircle; border: 1px dashed var(--p-color-border);">
+            <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <div class="empty-state-title" id="empty-state-title">暂未添加任何 Shopify 商店</div>
+            <div class="empty-state-desc" id="empty-state-desc">添加首个 Shopify 商店并绑定本地主题工程根目录，即可开启双向代码同步与热重载监听。</div>
+            <button class="btn btn-shopify" onclick="openAddModal()" style="margin-top: 8px;">
+              <span>+ 立即添加商店</span>
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       POLARIS MODAL: ADD / EDIT QUICK COMMAND
+       ========================================== -->
+  <div id="cmd-modal-backdrop" class="modal-backdrop">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title" id="cmd-modal-title">添加快速命令</div>
+        <button class="btn-icon" onclick="closeCommandModal()" title="关闭">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="edit-cmd-id">
+
+        <div class="form-group">
+          <label class="form-label" for="cmd-modal-name">命令名称 *</label>
+          <span class="form-hint">便于在列表中辨识该快速命令的名称。</span>
+          <input type="text" id="cmd-modal-name" class="form-input" placeholder="例如：Figma MCP (Socket)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="cmd-modal-dir">绑定本地执行目录 (Working Directory) *</label>
+          <span class="form-hint">命令执行时的本地工作路径。</span>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="cmd-modal-dir" class="form-input" style="flex: 1; font-family: var(--p-font-mono);" placeholder="例如：D:\code\MCP\claude-talk-to-figma-mcp">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="pickFolderForCommandModal()">浏览目录</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="cmd-modal-command">执行命令 (Command) *</label>
+          <span class="form-hint">可输入如 bun run socket、npm run dev、python server.py 等任意命令。</span>
+          <input type="text" id="cmd-modal-command" class="form-input" style="font-family: var(--p-font-mono);" placeholder="例如：bun run socket">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="cmd-modal-desc">备注说明 (可选)</label>
+          <span class="form-hint">辅助说明该命令的作用或端口信息。</span>
+          <input type="text" id="cmd-modal-desc" class="form-input" placeholder="例如：Claude Talk to Figma MCP Socket 服务">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeCommandModal()">取消</button>
+        <button class="btn btn-shopify" onclick="submitCommand()">保存命令</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       POLARIS MODAL: ADD / EDIT STORE
+       ========================================== -->
+  <div id="modal-backdrop" class="modal-backdrop">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">添加商店并绑定工程</div>
+        <button class="btn-icon" onclick="closeModal()" title="关闭">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="edit-store-id">
+
+        <div class="form-group">
+          <label class="form-label" for="modal-name">商店标识名称 *</label>
+          <span class="form-hint">便于在管理列表中识别该工程的显示别名。</span>
+          <input type="text" id="modal-name" class="form-input" placeholder="例如：品牌官网主站 / 测试沙盒">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-domain">Shopify 域名 (Domain) *</label>
+          <span class="form-hint">支持完整 URL 或 myshopify.com 格式域名，系统自动规整。</span>
+          <input type="text" id="modal-domain" class="form-input" style="font-family: var(--p-font-mono);" placeholder="例如：my-store.myshopify.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-dir">本地主题根目录 (Directory)</label>
+          <span class="form-hint">本地对应的主题工程根目录（包含 config/、layout/ 等文件夹）。</span>
+          <input type="text" id="modal-dir" class="form-input" style="font-family: var(--p-font-mono);" placeholder="例如：D:\code\my-shopify-theme">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-store-pwd">前台访问密码 (Storefront Password，可选)</label>
+          <span class="form-hint">供本地开发监听时自动跳过密码页验证。</span>
+          <div style="position: relative;">
+            <input type="password" id="modal-store-pwd" class="form-input" style="width: 100%; padding-right: 40px; font-family: var(--p-font-mono);" placeholder="若商店启用了前台密码保护则填写">
+            <button type="button" class="btn-icon" style="position: absolute; right: 4px; top: 4px;" onclick="togglePasswordVisibility('modal-store-pwd', this)">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-theme-pwd">Theme Access Token (可选)</label>
+          <span class="form-hint">若使用合作商 Theme Access App 授权而非浏览器登录，请在此填入。</span>
+          <div style="position: relative;">
+            <input type="password" id="modal-theme-pwd" class="form-input" style="width: 100%; padding-right: 40px; font-family: var(--p-font-mono);" placeholder="Theme Access App 密码或 Admin API 令牌">
+            <button type="button" class="btn-icon" style="position: absolute; right: 4px; top: 4px;" onclick="togglePasswordVisibility('modal-theme-pwd', this)">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+        <button class="btn btn-shopify" onclick="submitStore()">保存配置</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       POLARIS MODAL: THEME SELECTOR & DANGER PUSH
+       ========================================== -->
+  <div id="theme-modal-backdrop" class="modal-backdrop">
+    <div class="modal-window" style="max-width: 620px;">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="theme-modal-title">选择目标主题模板</div>
+          <div style="font-size: 12px; color: var(--p-color-text-subdued); margin-top: 2px;" id="theme-modal-subtitle">正在连接 Shopify CLI...</div>
+        </div>
+        <button class="btn-icon" onclick="closeThemeModal()" title="关闭">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 加载状态 -->
+        <div id="theme-modal-loading" style="padding: 36px 16px; text-align: center;">
+          <svg class="icon" viewBox="0 0 24 24" style="width: 28px; height: 28px; animation: spin 0.8s linear infinite; color: var(--p-color-shopify-green); margin-bottom: 8px;">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M21 21v-5h-5"></path>
+          </svg>
+          <div style="font-weight: 500; font-size: 13px;">正在通过 Shopify CLI 查询远程模板清单...</div>
+        </div>
+
+        <!-- 模板选择列表 -->
+        <div id="theme-modal-content" style="display: none; flex-direction: column; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">请选择目标主题：</label>
+            <div id="theme-card-list" class="theme-select-list">
+              <!-- 由 JS 渲染 -->
+            </div>
+          </div>
+
+          <div id="theme-new-name-box" class="form-group" style="display: none;">
+            <label class="form-label">新建模板副本名称 (可选)</label>
+            <input type="text" id="theme-new-name" class="form-input" placeholder="例如：发布备份 (留空则使用默认命名)">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeThemeModal()">取消</button>
+        <button class="btn btn-primary" id="theme-confirm-btn" onclick="submitThemeAction()" disabled>确认执行</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       POLARIS DANGER CONFIRM MODAL (LIVE THEME PUSH)
+       ========================================== -->
+  <div id="danger-modal-backdrop" class="modal-backdrop" style="z-index: 150;" onclick="handleDangerBackdropClick(event)">
+    <div class="modal-window" style="max-width: 520px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: var(--p-radius-full); background-color: var(--p-tone-critical-bg); color: var(--p-tone-critical-text); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          <div>
+            <div class="modal-title" style="color: var(--p-tone-critical-text);">线上主题推送操作警告</div>
+            <div style="font-size: 12px; color: var(--p-color-text-subdued); margin-top: 2px;">生产环境高风险操作二次确认</div>
+          </div>
+        </div>
+        <button class="btn-icon" onclick="closeDangerModal()" title="关闭">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="background-color: var(--p-color-bg-subdued); border: 1px solid var(--p-color-border-subtle); border-radius: var(--p-radius-md); padding: 14px 16px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <span style="color: var(--p-color-text-subdued); font-size: 13px; flex-shrink: 0; white-space: nowrap;">目标商店</span>
+            <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end; text-align: right; min-width: 0;">
+              <span id="danger-store-name" style="font-weight: 600; color: var(--p-color-text); font-size: 13px;"></span>
+              <span id="danger-store-domain" style="font-family: var(--p-font-mono); font-size: 12px; color: var(--p-color-text-subdued);"></span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding-top: 10px; border-top: 1px solid var(--p-color-border-subtle);">
+            <span style="color: var(--p-color-text-subdued); font-size: 13px; flex-shrink: 0; white-space: nowrap; margin-top: 2px;">目标主题模板</span>
+            <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end; text-align: right; min-width: 0; flex-wrap: wrap;">
+              <span class="polaris-badge polaris-badge-critical" style="flex-shrink: 0;">LIVE 正式</span>
+              <span id="danger-theme-name" style="font-weight: 600; color: var(--p-color-text); font-size: 13px; line-height: 1.4; word-break: break-word;"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 12.5px; color: var(--p-color-text-subdued); line-height: 1.5;">
+          推送代码将直接覆盖线上运行的正式模板，对进店顾客实时生效。请在 5 秒倒计时结束后确认是否放行该操作。
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeDangerModal()">取消</button>
+        <button class="btn btn-critical" id="danger-confirm-btn" onclick="confirmAndExecuteDangerPush()" disabled>确认推送线上 (5s)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MOBILE ACTION SHEET (移动端操作与详情抽屉)
+       ========================================== -->
+  <div id="action-sheet-backdrop" class="action-sheet-backdrop" onclick="handleActionSheetBackdropClick(event)">
+    <div class="action-sheet-window">
+      <div class="action-sheet-header">
+        <div class="action-sheet-title-wrap">
+          <h3 class="action-sheet-title" id="action-sheet-title">操作与详情</h3>
+          <span id="action-sheet-badge"></span>
+        </div>
+        <button class="btn-icon" onclick="closeActionSheet()" title="关闭">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="action-sheet-body" id="action-sheet-body">
+        <!-- 动态渲染 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       POLARIS DRAWER (TERMINAL REALTIME STREAM)
+       ========================================== -->
+  <div id="sheet-overlay" class="sheet-overlay" onclick="closeDrawer()"></div>
+  <aside id="sheet-panel" class="sheet-panel">
+    <div class="sheet-header">
+      <div class="sheet-title-group">
+        <span class="sheet-title" id="drawer-store-name">终端实时流</span>
+        <span id="drawer-status-badge" class="polaris-badge polaris-badge-neutral">STANDBY</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button class="btn btn-secondary btn-sm" onclick="copyLogsToClipboard()">复制日志</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearCurrentLogs()">清空</button>
+        <button class="btn-icon" onclick="closeDrawer()" title="关闭抽屉">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 凭证拦截横幅 (Polaris Attention Banner) -->
+    <div id="drawer-prompt-box" class="sheet-prompt-banner" style="display: none;">
+      <div class="prompt-banner-head">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"></circle><path d="M11 12l8.5-8.5M16 7l2.5 2.5M14 9l2 2"></path></svg>
+        <span id="prompt-box-title">需要前台访问密码</span>
+      </div>
+      <div style="font-size: 13px; color: #7a4300;" id="prompt-box-desc">
+        目标商店启用了访问保护，请输入密码后继续执行：
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <input type="password" id="prompt-input" class="form-input" style="flex: 1;" placeholder="输入密码后回车提交...">
+        <button class="btn btn-shopify btn-sm" onclick="submitPromptResponse()">提交并重试</button>
+      </div>
+      <label style="font-size: 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; color: #7a4300;">
+        <input type="checkbox" id="prompt-save-check" checked>
+        <span>记住此密码（自动保存至商店配置，后续免除询问）</span>
+      </label>
+    </div>
+
+    <!-- 实时终端黑色字符输出区 -->
+    <div id="terminal-body" class="terminal-container"></div>
+
+    <div class="sheet-footer">
+      <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="auto-scroll" checked>
+        <span>自动吸底滚动</span>
+      </label>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <div class="status-dot" id="ws-dot"></div>
+        <span id="ws-status" style="font-family: var(--p-font-mono);">就绪</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Polaris Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ==========================================
+       FRONTEND SCRIPT & WEBSOCKET ENGINE
+       ========================================== -->
+  <script>
+    let currentStoreId = null;
+    let isCurrentTargetCommand = false;
+    let currentPromptType = 'store_password';
+    let ws = null;
+    let storesCache = [];
+    let commandsCache = [];
+    let searchQuery = '';
+    let currentTab = 'all'; // all, running, unbound, action, commands
+    let themeQueryController = null;
+    let currentActionTarget = { storeId: null, action: null, themes: [] };
+    let selectedThemeId = null;
+    let selectedThemeRole = null;
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.app-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (!sidebar) return;
+      if (window.innerWidth <= 900) {
+        const isOpen = sidebar.classList.toggle('mobile-open');
+        if (backdrop) backdrop.classList.toggle('active', isOpen);
+      } else {
+        sidebar.classList.toggle('collapsed');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.querySelector('.app-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('mobile-open');
+      if (backdrop) backdrop.classList.remove('active');
+    }
+
+    // Toast 提示
+    function showToast(message, type = 'info', duration = 2800) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast-message';
+
+      let icon = '•';
+      if (type === 'success') icon = '✓';
+      else if (type === 'error') icon = '✕';
+      else if (type === 'warning') icon = '⚠';
+
+      toast.innerHTML = `<span style="font-weight:700; color:${type === 'success' ? '#32d74b' : (type === 'error' ? '#ff453a' : '#ffd60a')};">${icon}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add('show'));
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 200);
+      }, duration);
+    }
+
+    // ANSI 字符转义
+    function parseAnsi(text) {
+      let cleaned = text.replace(/\uFFFD/g, '');
+      cleaned = cleaned.replace(/(\x1b|\u001b)\[[0-9;?]*[A-Za-z]/g, (match) => {
+        return match.endsWith('m') ? match : '';
+      });
+      cleaned = cleaned.replace(/\r/g, '');
+
+      let html = cleaned
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      const ansiColorRegex = /(\x1b|\u001b)\[([0-9;]+)m/g;
+      html = html.replace(ansiColorRegex, (match, esc, p1) => {
+        if (p1 === '0' || p1 === '') return '</span>';
+        if (p1 === '1') return '<span style="font-weight:600; color:#ffffff">';
+        if (p1 === '31') return '<span style="color:#ff5c5c">';
+        if (p1 === '32') return '<span style="color:#32d74b">';
+        if (p1 === '33') return '<span style="color:#ffd60a">';
+        if (p1 === '34') return '<span style="color:#64d2ff">';
+        if (p1 === '35') return '<span style="color:#bf5af2">';
+        if (p1 === '36') return '<span style="color:#64d2ff">';
+        return '<span>';
+      });
+
+      const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
+      html = html.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+      return html;
+    }
+
+    // 同步商店列表与全局指标
+    async function fetchStores(showNotice = false) {
+      const icon = document.getElementById('refresh-icon');
+      if (icon) icon.style.animation = 'spin 0.6s linear infinite';
+
+      try {
+        const res = await fetch('/api/stores');
+        const stores = await res.json();
+        const prevStr = JSON.stringify(storesCache);
+        const nextStr = JSON.stringify(stores);
+        storesCache = stores || [];
+        updateMetrics(storesCache);
+        if (showNotice || prevStr !== nextStr) {
+          renderTable();
+        }
+        if (showNotice) showToast('商店状态已同步', 'success', 1600);
+      } catch (err) {
+        console.error('获取商店列表失败', err);
+        showToast('获取商店状态失败，请检查服务连接', 'error');
+      } finally {
+        if (icon) icon.style.animation = 'none';
+      }
+    }
+
+    // 更新指标卡
+    function updateMetrics(stores) {
+      const total = stores.length;
+      const activeDev = stores.filter(s => s.running).length;
+      const boundDirs = stores.filter(s => s.directory && s.directory.trim().length > 0).length;
+      const pendingPrompts = stores.filter(s => s.prompt_needed).length;
+
+      const elTotal = document.getElementById('stat-total-stores');
+      if (elTotal) elTotal.innerText = total;
+      const elActive = document.getElementById('stat-active-dev');
+      if (elActive) elActive.innerText = activeDev;
+      const elBound = document.getElementById('stat-bound-dirs');
+      if (elBound) elBound.innerText = boundDirs;
+      const elPending = document.getElementById('stat-pending-prompts');
+      if (elPending) elPending.innerText = pendingPrompts;
+
+      const elNavTotal = document.getElementById('nav-badge-total');
+      if (elNavTotal) elNavTotal.innerText = total;
+      const elStoresStat = document.getElementById('stores-stat-badge');
+      if (elStoresStat) elStoresStat.innerText = total;
+      const elNavRunning = document.getElementById('nav-badge-running');
+      if (elNavRunning) elNavRunning.innerText = activeDev;
+      const elNavPrompts = document.getElementById('nav-badge-prompts');
+      if (elNavPrompts) elNavPrompts.innerText = pendingPrompts;
+
+      const activeBadge = document.getElementById('stat-active-badge');
+      if (activeBadge) {
+        if (activeDev > 0) {
+          activeBadge.style.display = 'inline-flex';
+          activeBadge.innerText = `${activeDev} 运行中`;
+        } else {
+          activeBadge.style.display = 'none';
+        }
+      }
+
+      const promptBadge = document.getElementById('stat-prompts-badge');
+      if (promptBadge) {
+        if (pendingPrompts > 0) {
+          promptBadge.style.display = 'inline-flex';
+          promptBadge.innerText = `${pendingPrompts} 待录入`;
+        } else {
+          promptBadge.style.display = 'none';
+        }
+      }
+
+      const statusDot = document.getElementById('server-status-dot');
+      if (statusDot) {
+        if (activeDev > 0) {
+          statusDot.classList.add('pulsing');
+        } else {
+          statusDot.classList.remove('pulsing');
+        }
+      }
+    }
+
+    // 同步快速命令列表
+    async function fetchCommands(showNotice = false) {
+      try {
+        const res = await fetch('/api/commands');
+        const commands = await res.json();
+        const prevStr = JSON.stringify(commandsCache);
+        const nextStr = JSON.stringify(commands);
+        commandsCache = commands || [];
+        updateCommandsMetrics(commandsCache);
+        if (showNotice || prevStr !== nextStr) {
+          renderCommands();
+        }
+      } catch (err) {
+        console.error('获取快速命令失败', err);
+      }
+    }
+
+    function updateCommandsMetrics(commands) {
+      const total = commands.length;
+      const running = commands.filter(c => c.running).length;
+      const elNav = document.getElementById('nav-badge-commands');
+      if (elNav) elNav.innerText = total;
+      const elStat = document.getElementById('commands-stat-badge');
+      if (elStat) elStat.innerText = total;
+      const elRunning = document.getElementById('commands-running-badge');
+      if (elRunning) {
+        if (running > 0) {
+          elRunning.style.display = 'inline-flex';
+          elRunning.innerText = `${running} 运行中`;
+        } else {
+          elRunning.style.display = 'none';
+        }
+      }
+    }
+
+    // 渲染快速命令卡片网格
+    function renderCommands() {
+      const container = document.getElementById('commands-grid');
+      const section = document.getElementById('quick-commands-section');
+      if (!container || !section) return;
+
+      let list = commandsCache || [];
+
+      if (currentTab === 'running') {
+        list = list.filter(c => c.running);
+      } else if (currentTab === 'action') {
+        list = [];
+      }
+
+      if (searchQuery) {
+        list = list.filter(c => 
+          (c.name && c.name.toLowerCase().includes(searchQuery)) ||
+          (c.command && c.command.toLowerCase().includes(searchQuery)) ||
+          (c.directory && c.directory.toLowerCase().includes(searchQuery)) ||
+          (c.description && c.description.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      if (currentTab === 'action') {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'flex';
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--p-color-text-subdued); background: var(--p-color-bg-surface); border: 1px dashed var(--p-color-border); border-radius: var(--p-radius-md);">
+            <span>${searchQuery ? '未找到符合条件的快速命令' : '暂未配置快速命令，点击右上角「+ 添加快速命令」即可配置'}</span>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(c => {
+        const isRunning = c.running;
+        let badgeHtml = '';
+        if (isRunning) {
+          badgeHtml = `<span class="polaris-badge polaris-badge-success"><span class="status-dot pulsing" style="width:6px; height:6px;"></span> 运行中</span>`;
+        } else if (c.status === 'error') {
+          badgeHtml = `<span class="polaris-badge polaris-badge-critical">异常结束</span>`;
+        } else {
+          badgeHtml = `<span class="polaris-badge polaris-badge-neutral">就绪 (Standby)</span>`;
+        }
+
+        const safeDir = (c.directory || '').replace(/\\/g, '\\\\');
+
+        return `
+          <div class="store-card ${isRunning ? 'running' : ''}">
+            <div class="store-card-header">
+              <div class="store-card-title-group">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <h3 class="store-card-name" title="${escapeHtml(c.name)}">${escapeHtml(c.name)}</h3>
+                  ${badgeHtml}
+                </div>
+                <div style="font-size: 12px; color: var(--p-color-text-subdued);">${escapeHtml(c.description || '自定义命令服务')}</div>
+              </div>
+              <div class="store-card-tools">
+                <button class="btn-icon" onclick="openEditCommandModal('${c.id}')" title="编辑命令">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                </button>
+                <button class="btn-icon btn-icon-danger" onclick="deleteCommand('${c.id}', '${escapeHtml(c.name)}')" title="删除命令">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10 2H14M4 7H20M6 7H18V19C18 20.6569 16.6569 22 15 22H9C7.34315 22 6 20.6569 6 19V7Z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="command-code-box" onclick="copyText('${c.command.replace(/'/g, "\\'")}', '已复制执行命令')" title="点击复制执行命令">
+              <span class="command-prompt-symbol">&gt;</span>
+              <code class="command-code-text">${escapeHtml(c.command)}</code>
+              <svg class="icon copy-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </div>
+
+            <div class="card-dir-box" onclick="copyText('${safeDir}', '已复制本地目录')" title="点击复制路径: ${c.directory}">
+              <svg class="icon dir-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span class="dir-path-text">${escapeHtml(c.directory)}</span>
+              <svg class="icon copy-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </div>
+
+            <div class="store-card-footer">
+              <div class="card-action-primary">
+                ${isRunning
+                  ? `<button class="btn btn-critical btn-sm" onclick="triggerCommandAction('${c.id}', 'stop')">
+                       <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>
+                       <span>停止进程</span>
+                     </button>`
+                  : `<button class="btn btn-shopify btn-sm" onclick="triggerCommandAction('${c.id}', 'start')">
+                       <svg class="icon" viewBox="0 0 24 24"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
+                       <span>运行命令</span>
+                     </button>`
+                }
+                <button class="btn btn-secondary btn-sm btn-mobile-more" onclick="openCommandActionSheet('${c.id}')" title="更多操作">
+                  <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                </button>
+              </div>
+              <div class="card-action-secondary">
+                <button class="btn btn-secondary btn-sm" onclick="openDrawer('${c.id}', '${escapeHtml(c.name)}', ${isRunning}, true)">终端日志</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 过滤切换
+    function setFilterTab(tab) {
+      currentTab = tab;
+      const navItems = document.querySelectorAll('.app-sidebar .nav-item');
+      navItems.forEach(item => item.classList.remove('active'));
+
+      const activeItem = document.getElementById(`nav-item-${tab}`);
+      if (activeItem) activeItem.classList.add('active');
+
+      if (window.innerWidth <= 900) {
+        closeMobileSidebar();
+      }
+
+      renderGrid();
+      renderCommands();
+    }
+
+    // 搜索输入过滤
+    function onSearchInput() {
+      searchQuery = document.getElementById('top-search-input').value.trim().toLowerCase();
+      renderGrid();
+      renderCommands();
+    }
+
+    // 快捷键支持
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        document.getElementById('top-search-input').focus();
+      }
+      if (e.key === 'Escape') {
+        closeDrawer();
+        closeModal();
+        closeCommandModal();
+        closeDangerModal();
+        closeThemeModal();
+        closeActionSheet();
+        closeSortDropdown();
+      }
+    });
+
+    // 点击外部关闭下拉菜单
+    window.addEventListener('click', (e) => {
+      const wrap = document.getElementById('store-sort-dropdown-wrap');
+      if (wrap && !wrap.contains(e.target)) {
+        closeSortDropdown();
+      }
+    });
+
+    // 移动端操作与详情抽屉 (Action Sheet)
+    function openStoreActionSheet(storeId) {
+      const store = (storesCache || []).find(s => s.id === storeId);
+      if (!store) return;
+      const isRunning = !!store.running;
+      const isPinned = !!store.pinned;
+      const cleanDomain = (store.domain || '').trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '');
+      const adminUrl = cleanDomain
+        ? (cleanDomain.includes('admin.shopify.com') || cleanDomain.endsWith('/admin')
+            ? `https://${cleanDomain}`
+            : `https://${cleanDomain}/admin`)
+        : '';
+
+      const backdrop = document.getElementById('action-sheet-backdrop');
+      const titleEl = document.getElementById('action-sheet-title');
+      const badgeEl = document.getElementById('action-sheet-badge');
+      const bodyEl = document.getElementById('action-sheet-body');
+
+      titleEl.textContent = store.name;
+      badgeEl.innerHTML = isRunning
+        ? `<span class="polaris-badge polaris-badge-success"><span class="status-dot pulsing" style="width:6px;height:6px;"></span> DEV 运行中</span>`
+        : `<span class="polaris-badge polaris-badge-neutral">待机就绪</span>`;
+
+      const safeDir = (store.directory || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+
+      bodyEl.innerHTML = `
+        <div class="action-sheet-info-group">
+          <div class="action-sheet-info-item">
+            <span class="action-sheet-info-label">商店域名</span>
+            <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+              <a href="https://${store.domain}" target="_blank" class="store-domain-link action-sheet-info-val" style="color: #005bd3;">${store.domain || '未配置'}</a>
+              <button class="btn-icon" style="padding: 2px;" onclick="copyText('${store.domain}', '已复制域名')" title="复制域名">
+                <svg class="icon" style="width: 13px; height: 13px;" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="action-sheet-info-item" style="align-items: flex-start;">
+            <span class="action-sheet-info-label">本地目录</span>
+            <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; justify-content: flex-end;">
+              <span class="action-sheet-info-val" title="${store.directory || ''}">${store.directory || '未绑定'}</span>
+              ${store.directory ? `
+                <button class="btn-icon" style="padding: 2px;" onclick="copyText('${safeDir}', '已复制本地路径')" title="复制路径">
+                  <svg class="icon" style="width: 13px; height: 13px;" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              ` : `
+                <button class="btn btn-secondary btn-sm" style="padding: 2px 6px; font-size: 11px;" onclick="closeActionSheet(); bindFolderDirectly('${store.id}');">绑定</button>
+              `}
+            </div>
+          </div>
+        </div>
+
+        <div class="action-sheet-btn-grid">
+          ${isRunning
+            ? `<button class="action-sheet-btn action-sheet-btn-critical" onclick="closeActionSheet(); triggerAction('${store.id}', 'stop')">
+                 <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>
+                 <span>停止 DEV 进程</span>
+               </button>`
+            : `<button class="action-sheet-btn action-sheet-btn-primary" onclick="closeActionSheet(); triggerAction('${store.id}', 'dev')">
+                 <svg class="icon" viewBox="0 0 24 24"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
+                 <span>启动 DEV 进程</span>
+               </button>`
+          }
+          <button class="action-sheet-btn" onclick="closeActionSheet(); openDrawer('${store.id}', '${store.name}', ${isRunning})">
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            <span>终端实时日志</span>
+          </button>
+          ${adminUrl ? `
+            <a href="${adminUrl}" target="_blank" rel="noopener noreferrer" class="action-sheet-btn" style="text-decoration: none;" onclick="closeActionSheet()">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span>Shopify 后台</span>
+            </a>
+          ` : `
+            <button class="action-sheet-btn" onclick="closeActionSheet(); showToast('未配置商店域名', 'warning');">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span>Shopify 后台</span>
+            </button>
+          `}
+          <button class="action-sheet-btn" onclick="closeActionSheet(); openThemeSelectModal('${store.id}', 'pull')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>拉取线上主题</span>
+          </button>
+          <button class="action-sheet-btn" onclick="closeActionSheet(); openThemeSelectModal('${store.id}', 'push')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>推送本地代码</span>
+          </button>
+          <button class="action-sheet-btn" onclick="closeActionSheet(); togglePinStore('${store.id}')">
+            <svg class="icon" viewBox="0 0 24 24" style="${isPinned ? 'color: #f59e0b; fill: #f59e0b;' : ''}"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1z"></path></svg>
+            <span>${isPinned ? '取消置顶' : '置顶商店'}</span>
+          </button>
+          <button class="action-sheet-btn" onclick="closeActionSheet(); editStoreById('${store.id}')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>编辑商店配置</span>
+          </button>
+          <button class="action-sheet-btn action-sheet-btn-critical" onclick="closeActionSheet(); deleteStore('${store.id}', '${store.name}')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 2H14M4 7H20M6 7H18V19C18 20.6569 16.6569 22 15 22H9C7.34315 22 6 20.6569 6 19V7Z"></path></svg>
+            <span>移除此商店</span>
+          </button>
+        </div>
+      `;
+
+      backdrop.classList.add('active');
+    }
+
+    function openCommandActionSheet(cmdId) {
+      const cmd = (commandsCache || []).find(c => c.id === cmdId);
+      if (!cmd) return;
+      const isRunning = !!cmd.running;
+
+      const backdrop = document.getElementById('action-sheet-backdrop');
+      const titleEl = document.getElementById('action-sheet-title');
+      const badgeEl = document.getElementById('action-sheet-badge');
+      const bodyEl = document.getElementById('action-sheet-body');
+
+      titleEl.textContent = cmd.name;
+      badgeEl.innerHTML = isRunning
+        ? `<span class="polaris-badge polaris-badge-success"><span class="status-dot pulsing" style="width:6px;height:6px;"></span> 运行中</span>`
+        : `<span class="polaris-badge polaris-badge-neutral">待机就绪</span>`;
+
+      const safeDir = (cmd.directory || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      const safeCmd = (cmd.command || '').replace(/'/g, "\\'");
+
+      bodyEl.innerHTML = `
+        <div class="action-sheet-info-group">
+          <div class="action-sheet-info-item">
+            <span class="action-sheet-info-label">说明</span>
+            <span class="action-sheet-info-val" style="font-family: inherit;">${cmd.description || '无描述'}</span>
+          </div>
+          <div class="action-sheet-info-item">
+            <span class="action-sheet-info-label">执行命令</span>
+            <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+              <code class="action-sheet-info-val" style="color: #005bd3;">${escapeHtml(cmd.command)}</code>
+              <button class="btn-icon" style="padding: 2px;" onclick="copyText('${safeCmd}', '已复制命令')" title="复制命令">
+                <svg class="icon" style="width: 13px; height: 13px;" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="action-sheet-info-item" style="align-items: flex-start;">
+            <span class="action-sheet-info-label">运行目录</span>
+            <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; justify-content: flex-end;">
+              <span class="action-sheet-info-val" title="${cmd.directory || ''}">${cmd.directory || '未设置'}</span>
+              <button class="btn-icon" style="padding: 2px;" onclick="copyText('${safeDir}', '已复制运行目录')" title="复制路径">
+                <svg class="icon" style="width: 13px; height: 13px;" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-sheet-btn-grid">
+          ${isRunning
+            ? `<button class="action-sheet-btn action-sheet-btn-critical" onclick="closeActionSheet(); triggerCommandAction('${cmd.id}', 'stop')">
+                 <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>
+                 <span>停止命令进程</span>
+               </button>`
+            : `<button class="action-sheet-btn action-sheet-btn-primary" onclick="closeActionSheet(); triggerCommandAction('${cmd.id}', 'start')">
+                 <svg class="icon" viewBox="0 0 24 24"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
+                 <span>立即运行命令</span>
+               </button>`
+          }
+          <button class="action-sheet-btn" onclick="closeActionSheet(); openDrawer('${cmd.id}', '${escapeHtml(cmd.name)}', ${isRunning}, true)">
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            <span>终端实时日志</span>
+          </button>
+          <button class="action-sheet-btn" onclick="closeActionSheet(); openEditCommandModal('${cmd.id}')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>编辑命令配置</span>
+          </button>
+          <button class="action-sheet-btn action-sheet-btn-critical" onclick="closeActionSheet(); deleteCommand('${cmd.id}', '${escapeHtml(cmd.name)}')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 2H14M4 7H20M6 7H18V19C18 20.6569 16.6569 22 15 22H9C7.34315 22 6 20.6569 6 19V7Z"></path></svg>
+            <span>删除此命令</span>
+          </button>
+        </div>
+      `;
+
+      backdrop.classList.add('active');
+    }
+
+    function closeActionSheet() {
+      const backdrop = document.getElementById('action-sheet-backdrop');
+      if (backdrop) backdrop.classList.remove('active');
+    }
+
+    function handleActionSheetBackdropClick(event) {
+      if (event.target === document.getElementById('action-sheet-backdrop')) {
+        closeActionSheet();
+      }
+    }
+
+    let storeViewMode = localStorage.getItem('store_view_mode') || 'grid';
+    let storeSortMode = localStorage.getItem('store_sort_mode') || 'created_desc';
+
+    function setStoreViewMode(mode) {
+      storeViewMode = mode;
+      localStorage.setItem('store_view_mode', mode);
+
+      const gridBtn = document.getElementById('view-mode-grid');
+      const listBtn = document.getElementById('view-mode-list');
+      const container = document.getElementById('stores-grid');
+
+      if (gridBtn) gridBtn.classList.toggle('active', mode === 'grid');
+      if (listBtn) listBtn.classList.toggle('active', mode === 'list');
+      if (container) {
+        container.classList.toggle('list-view', mode === 'list');
+        if (currentTab !== 'commands') {
+          container.style.display = mode === 'list' ? 'flex' : 'grid';
+        }
+      }
+    }
+
+    const sortLabelsMap = {
+      'created_desc': '添加时间 (最新)',
+      'created_asc': '添加时间 (最早)',
+      'updated_desc': '编辑时间 (最新)',
+      'updated_asc': '编辑时间 (最早)',
+      'used_desc': '使用时间 (最新)',
+      'used_asc': '使用时间 (最早)',
+      'name_asc': '名称 (A - Z)',
+      'name_desc': '名称 (Z - A)'
+    };
+
+    function updateSortDropdownUI() {
+      const labelEl = document.getElementById('store-sort-label');
+      if (labelEl) {
+        labelEl.textContent = sortLabelsMap[storeSortMode] || '添加时间 (最新)';
+      }
+      const menu = document.getElementById('store-sort-menu');
+      if (menu) {
+        const items = menu.querySelectorAll('.sort-menu-item');
+        items.forEach(item => {
+          const sortVal = item.getAttribute('data-sort');
+          item.classList.toggle('selected', sortVal === storeSortMode);
+        });
+      }
+    }
+
+    function toggleSortDropdown(event) {
+      if (event) event.stopPropagation();
+      const trigger = document.getElementById('store-sort-trigger');
+      const menu = document.getElementById('store-sort-menu');
+      if (!menu) return;
+      const isOpen = menu.classList.contains('show');
+      if (isOpen) {
+        closeSortDropdown();
+      } else {
+        menu.classList.add('show');
+        if (trigger) {
+          trigger.classList.add('active');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      }
+    }
+
+    function closeSortDropdown() {
+      const trigger = document.getElementById('store-sort-trigger');
+      const menu = document.getElementById('store-sort-menu');
+      if (menu) menu.classList.remove('show');
+      if (trigger) {
+        trigger.classList.remove('active');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function selectSortMode(mode) {
+      closeSortDropdown();
+      setStoreSortMode(mode);
+    }
+
+    function setStoreSortMode(mode) {
+      storeSortMode = mode;
+      localStorage.setItem('store_sort_mode', mode);
+      updateSortDropdownUI();
+      renderGrid();
+    }
+
+    function touchStore(storeId) {
+      if (!storeId) return;
+      const s = (storesCache || []).find(x => x.id === storeId);
+      const now = Math.floor(Date.now() / 1000);
+      if (s) {
+        s.used_at = now;
+      }
+      fetch(`/api/stores/${storeId}/touch`, { method: 'POST' }).catch(() => {});
+    }
+
+    // 渲染商店宫格/列表视图 (Grid / List View)
+    function renderGrid() {
+      const container = document.getElementById('stores-grid');
+      const emptyState = document.getElementById('empty-state-view');
+      const storeSectionTitle = document.getElementById('stores-section-title');
+
+      if (currentTab === 'commands') {
+        container.style.display = 'none';
+        if (storeSectionTitle) storeSectionTitle.style.display = 'none';
+        emptyState.style.display = 'none';
+        return;
+      } else {
+        container.style.display = storeViewMode === 'list' ? 'flex' : 'grid';
+        if (storeSectionTitle) storeSectionTitle.style.display = 'flex';
+      }
+
+      if (storeViewMode === 'list') {
+        container.classList.add('list-view');
+      } else {
+        container.classList.remove('list-view');
+      }
+
+      const gridBtn = document.getElementById('view-mode-grid');
+      const listBtn = document.getElementById('view-mode-list');
+      if (gridBtn) gridBtn.classList.toggle('active', storeViewMode === 'grid');
+      if (listBtn) listBtn.classList.toggle('active', storeViewMode === 'list');
+
+      updateSortDropdownUI();
+
+      let list = (storesCache || []).slice();
+
+      // Tab 过滤
+      if (currentTab === 'running') {
+        list = list.filter(s => s.running);
+      } else if (currentTab === 'action') {
+        list = list.filter(s => s.prompt_needed);
+      }
+
+      // 关键词过滤
+      if (searchQuery) {
+        list = list.filter(s =>
+          (s.name && s.name.toLowerCase().includes(searchQuery)) ||
+          (s.domain && s.domain.toLowerCase().includes(searchQuery)) ||
+          (s.directory && s.directory.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      if (storesCache.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'flex';
+        document.getElementById('empty-state-title').innerText = '暂未添加任何 Shopify 商店';
+        document.getElementById('empty-state-desc').innerText = '添加首个 Shopify 商店并绑定本地主题工程根目录，即可开启双向代码同步与热重载监听。';
+        return;
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'flex';
+        document.getElementById('empty-state-title').innerText = '未找到匹配的商店';
+        document.getElementById('empty-state-desc').innerText = '在当前筛选条件下未检索到商店，请尝试切换标签或清除关键词。';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      // 置顶的不参与排序：
+      // 1. 将商店拆分为「置顶列表」与「非置顶列表」
+      // 2. 置顶列表完全保持其固有位置，不被排序规则改变
+      // 3. 仅对非置顶列表按选定的排序方式进行排序
+      const pinnedList = list.filter(s => !!s.pinned);
+      const unpinnedList = list.filter(s => !s.pinned);
+
+      unpinnedList.sort((a, b) => {
+        const aCreated = a.created_at || 0;
+        const bCreated = b.created_at || 0;
+        const aUpdated = a.updated_at || a.created_at || 0;
+        const bUpdated = b.updated_at || b.created_at || 0;
+        const aUsed = a.used_at || a.updated_at || a.created_at || 0;
+        const bUsed = b.used_at || b.updated_at || b.created_at || 0;
+        const aName = (a.name || '').toLowerCase();
+        const bName = (b.name || '').toLowerCase();
+
+        switch (storeSortMode) {
+          case 'created_asc':
+            return aCreated - bCreated;
+          case 'created_desc':
+            return bCreated - aCreated;
+          case 'updated_asc':
+            return aUpdated - bUpdated;
+          case 'updated_desc':
+            return bUpdated - aUpdated;
+          case 'used_asc':
+            return aUsed - bUsed;
+          case 'used_desc':
+            return bUsed - aUsed;
+          case 'name_asc':
+            return aName.localeCompare(bName, 'zh-CN');
+          case 'name_desc':
+            return bName.localeCompare(aName, 'zh-CN');
+          default:
+            return bCreated - aCreated;
+        }
+      });
+
+      list = [...pinnedList, ...unpinnedList];
+
+      container.innerHTML = list.map(s => {
+        const isRunning = s.running;
+        const isPinned = !!s.pinned;
+        let badgeHtml = '';
+        if (isRunning) {
+          badgeHtml = `<span class="polaris-badge polaris-badge-success"><span class="status-dot pulsing" style="width:6px; height:6px;"></span> DEV 运行中</span>`;
+        } else if (s.status === 'error') {
+          badgeHtml = `<span class="polaris-badge polaris-badge-critical">异常结束</span>`;
+        } else {
+          badgeHtml = `<span class="polaris-badge polaris-badge-neutral">就绪 (Standby)</span>`;
+        }
+
+        let promptBanner = '';
+        if (s.prompt_needed) {
+          promptBanner = `
+            <div class="row-banner" style="margin-top: 0;">
+              <span>⚠ ${s.prompt_needed.title || '需要录入访问凭证'}</span>
+              <button class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 11px;" onclick="openDrawer('${s.id}', '${s.name}', ${isRunning})">
+                立即输入
+              </button>
+            </div>
+          `;
+        }
+
+        const dirDisplay = s.directory 
+          ? `
+            <div class="card-dir-box" onclick="copyText('${s.directory.replace(/\\/g, '\\\\')}', '已复制本地路径')" title="点击复制路径: ${s.directory}">
+              <svg class="icon dir-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span class="dir-path-text">${s.directory}</span>
+              <svg class="icon copy-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </div>
+          `
+          : `
+            <div class="card-dir-box unbound" onclick="bindFolderDirectly('${s.id}')" title="点击选择本地目录">
+              <svg class="icon dir-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span class="dir-path-text">未绑定本地目录（点击绑定）</span>
+            </div>
+          `;
+
+        const cleanDomain = (s.domain || '').trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '');
+        const adminUrl = cleanDomain 
+          ? (cleanDomain.includes('admin.shopify.com') || cleanDomain.endsWith('/admin')
+              ? `https://${cleanDomain}` 
+              : `https://${cleanDomain}/admin`)
+          : '';
+
+        return `
+          <div class="store-card ${isRunning ? 'running' : ''} ${isPinned ? 'is-pinned' : ''}">
+            <div class="store-card-header">
+              <div class="store-card-title-group">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <h3 class="store-card-name" title="${s.name}">${s.name}</h3>
+                  ${badgeHtml}
+                </div>
+                <div class="store-card-domain">
+                  <a href="https://${s.domain}" target="_blank" class="store-domain-link" onclick="touchStore('${s.id}')" title="访问前台商城">
+                    <span>${s.domain}</span>
+                    <svg class="icon" style="width: 12px; height: 12px;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="store-card-tools">
+                <button class="btn-icon btn-pin ${isPinned ? 'pinned' : ''}" onclick="togglePinStore('${s.id}')" title="${isPinned ? '取消置顶' : '置顶此商店'}">
+                  <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px; ${isPinned ? 'color: #f59e0b; fill: #f59e0b;' : ''}">
+                    <path d="M12 17v5"></path>
+                    <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1z"></path>
+                  </svg>
+                </button>
+                <button class="btn-icon" onclick="editStoreById('${s.id}')" title="编辑配置">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                </button>
+                <button class="btn-icon btn-icon-danger" onclick="deleteStore('${s.id}', '${s.name}')" title="移除商店">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10 2H14M4 7H20M6 7H18V19C18 20.6569 16.6569 22 15 22H9C7.34315 22 6 20.6569 6 19V7Z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="store-card-dir">
+              ${dirDisplay}
+            </div>
+
+            ${promptBanner}
+
+            <div class="store-card-footer">
+              <div class="card-action-primary">
+                ${isRunning 
+                  ? `<button class="btn btn-critical btn-sm" onclick="triggerAction('${s.id}', 'stop')">
+                       <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>
+                       <span>停止</span>
+                     </button>`
+                  : `<button class="btn btn-shopify btn-sm" onclick="triggerAction('${s.id}', 'dev')">
+                       <svg class="icon" viewBox="0 0 24 24"><polygon points="6 4 19 12 6 20 6 4"></polygon></svg>
+                       <span>启动 Dev</span>
+                     </button>`
+                }
+                ${adminUrl
+                  ? `<a href="${adminUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm btn-admin-link" onclick="touchStore('${s.id}')" title="进入商店后台">编辑后台</a>`
+                  : `<button class="btn btn-secondary btn-sm btn-admin-link" onclick="showToast('未配置商店域名', 'warning')" title="未配置商店域名">编辑后台</button>`
+                }
+                <button class="btn btn-secondary btn-sm btn-mobile-more" onclick="openStoreActionSheet('${s.id}')" title="更多操作">
+                  <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                </button>
+              </div>
+              <div class="card-action-secondary">
+                <button class="btn btn-secondary btn-sm" onclick="openThemeSelectModal('${s.id}', 'pull')">拉取</button>
+                <button class="btn btn-secondary btn-sm" onclick="openThemeSelectModal('${s.id}', 'push')">推送</button>
+                <button class="btn btn-secondary btn-sm" onclick="openDrawer('${s.id}', '${s.name}', ${isRunning})">终端日志</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    const renderTable = renderGrid;
+
+    // 商店置顶切换
+    async function togglePinStore(storeId) {
+      const s = storesCache.find(x => x.id === storeId);
+      if (!s) return;
+
+      const prevPinned = !!s.pinned;
+      const nextPinned = !prevPinned;
+      s.pinned = nextPinned;
+
+      renderGrid();
+      showToast(nextPinned ? `已置顶 [${s.name}]` : `已取消 [${s.name}] 置顶`, 'success', 1500);
+
+      try {
+        const res = await fetch(`/api/stores/${storeId}/pin`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) {
+          s.pinned = prevPinned;
+          renderGrid();
+          showToast(data.detail || '置顶状态更新失败', 'error');
+        }
+      } catch (err) {
+        s.pinned = prevPinned;
+        renderGrid();
+        showToast('请求失败: ' + err, 'error');
+      }
+    }
+
+    // 复制文本
+    function copyText(str, successMsg = '已复制') {
+      navigator.clipboard.writeText(str).then(() => {
+        showToast(successMsg, 'success', 1600);
+      }).catch(() => {
+        showToast('复制失败', 'error');
+      });
+    }
+
+    // 切换密码显示隐藏
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      btn.innerHTML = isPassword
+        ? `<svg class="icon" viewBox="0 0 24 24"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>`
+        : `<svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+    }
+
+    // 绑定本地目录
+    async function bindFolderDirectly(storeId) {
+      showToast('正在调起系统文件选择窗口...', 'info', 2200);
+      try {
+        const res = await fetch(`/api/stores/${storeId}/bind-folder`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '绑定失败', 'error');
+          return;
+        }
+        if (data.cancelled) {
+          showToast('已取消目录选择', 'info', 1600);
+          return;
+        }
+        showToast(`已绑定本地目录: ${data.path}`, 'success');
+        fetchStores();
+      } catch (err) {
+        showToast('选择目录异常: ' + err, 'error');
+      }
+    }
+
+    // 模态框中选取文件夹
+    async function pickFolderForModal() {
+      const currentDir = document.getElementById('modal-dir').value.trim();
+      showToast('正在调起系统目录浏览窗口...', 'info', 2200);
+      try {
+        const res = await fetch('/api/select-folder', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ initial_dir: currentDir })
+        });
+        const data = await res.json();
+        if (data.path) {
+          document.getElementById('modal-dir').value = data.path;
+          showToast(`已选定目录: ${data.path}`, 'success', 1800);
+        }
+      } catch (err) {
+        showToast('选择文件夹出错: ' + err, 'error');
+      }
+    }
+
+    // 编辑商店配置
+    function editStoreById(storeId) {
+      const s = storesCache.find(x => x.id === storeId);
+      if (s) {
+        openEditModal(s.id, s.name, s.domain, s.directory || '', s.store_password || '', s.theme_password || '');
+      }
+    }
+
+    // 凭据拦截处理
+    function showPromptBox(info) {
+      currentPromptType = info.type || 'store_password';
+      document.getElementById('prompt-box-title').innerText = info.title || '需要输入访问凭据';
+      document.getElementById('prompt-box-desc').innerText = info.message || '请输入密码以继续执行：';
+      const promptBox = document.getElementById('drawer-prompt-box');
+      promptBox.style.display = 'flex';
+      const input = document.getElementById('prompt-input');
+      input.focus();
+    }
+
+    function hidePromptBox() {
+      document.getElementById('drawer-prompt-box').style.display = 'none';
+      document.getElementById('prompt-input').value = '';
+    }
+
+    async function submitPromptResponse() {
+      const input = document.getElementById('prompt-input');
+      const val = input.value.trim();
+      if (!val) {
+        showToast('请输入凭据密码', 'warning');
+        input.focus();
+        return;
+      }
+      const save = document.getElementById('prompt-save-check').checked;
+      try {
+        const res = await fetch(`/api/stores/${currentStoreId}/prompt-respond`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt_type: currentPromptType || 'store_password',
+            value: val,
+            save: save
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '凭证提交失败', 'error');
+          return;
+        }
+        showToast('凭据已录入，CLI 任务正在重新执行...', 'success');
+        hidePromptBox();
+        fetchStores();
+      } catch (err) {
+        showToast('凭证提交异常: ' + err, 'error');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('prompt-input');
+      if (input) {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') submitPromptResponse();
+        });
+      }
+    });
+
+    // 主题选择模态框 (Pull / Push)
+    async function openThemeSelectModal(storeId, action) {
+      const store = storesCache.find(x => x.id === storeId);
+      if (!store) return;
+      if (!store.directory) {
+        showToast('请先为此商店绑定本地主题工程根目录！', 'warning');
+        return;
+      }
+
+      currentActionTarget = { storeId, action, themes: [] };
+      selectedThemeId = null;
+      selectedThemeRole = null;
+
+      const isPull = action === 'pull';
+      document.getElementById('theme-modal-title').innerText = isPull 
+        ? `从 [${store.name}] 拉取模板代码` 
+        : `推送代码至 [${store.name}]`;
+      document.getElementById('theme-modal-subtitle').innerText = `目标商店：${store.domain} • 本地：${store.directory}`;
+
+      const loadingEl = document.getElementById('theme-modal-loading');
+      loadingEl.innerHTML = `
+        <svg class="icon" viewBox="0 0 24 24" style="width: 28px; height: 28px; animation: spin 0.8s linear infinite; color: var(--p-color-shopify-green); margin-bottom: 8px;">
+          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+          <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+          <path d="M21 21v-5h-5"></path>
+        </svg>
+        <div style="font-weight: 500; font-size: 13px; color: var(--p-color-text);">正在通过 Shopify CLI 查询远程模板清单...</div>
+      `;
+      loadingEl.style.display = 'block';
+      document.getElementById('theme-modal-content').style.display = 'none';
+      document.getElementById('theme-new-name-box').style.display = 'none';
+      document.getElementById('theme-confirm-btn').disabled = true;
+      document.getElementById('theme-confirm-btn').className = 'btn btn-primary';
+      document.getElementById('theme-confirm-btn').innerText = isPull ? '开始拉取' : '开始推送';
+
+      closeDangerModal();
+      document.getElementById('theme-modal-backdrop').classList.add('active');
+
+      themeQueryController?.abort();
+      const controller = new AbortController();
+      themeQueryController = controller;
+      const timeoutId = setTimeout(() => controller.abort(), 65000);
+      try {
+        const res = await fetch(`/api/stores/${storeId}/themes`, { signal: controller.signal });
+        const themes = await res.json();
+        if (themeQueryController !== controller) return;
+        if (!res.ok) throw new Error(themes.detail || '读取模板列表失败');
+
+        currentActionTarget.themes = themes;
+        renderThemeCardList(themes, action);
+      } catch (err) {
+        if (themeQueryController !== controller) return;
+        const isTimeout = err.name === 'AbortError';
+        const msg = isTimeout ? '查询远程模板超时，Shopify 远程响应较慢，请稍后重试。' : err.message;
+        loadingEl.innerHTML = renderThemeFetchError(msg, storeId, action);
+      } finally {
+        clearTimeout(timeoutId);
+        if (themeQueryController === controller) themeQueryController = null;
+      }
+    }
+
+    function renderThemeFetchError(msg, storeId, action) {
+      const escapeHtml = (str) => {
+        return (str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+
+      const hasAuthPrompt = /activate-with-code|log in to shopify|verification code/i.test(msg);
+      const codeMatch = msg.match(/verification\s*code:\s*([A-Za-z0-9-]+)/i);
+      const authCode = codeMatch ? codeMatch[1].trim() : null;
+      let authUrlMatch = msg.match(/https?:\/\/accounts\.shopify\.com\/activate-with-code[^\s<"']+/i) || msg.match(/https?:\/\/[^\s<"']+/i);
+      let authUrl = authUrlMatch ? authUrlMatch[0].trim() : null;
+      if (!authUrl && authCode) {
+        authUrl = `https://accounts.shopify.com/activate-with-code?device_code%5Buser_code%5D=${encodeURIComponent(authCode)}`;
+      }
+
+      if (hasAuthPrompt && (authUrl || authCode)) {
+        return `
+          <div class="theme-auth-card">
+            <div class="theme-auth-header">
+              <div class="theme-auth-icon-badge">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <div class="theme-auth-info">
+                <div class="theme-auth-title">Shopify CLI 需要完成设备授权验证</div>
+                <div class="theme-auth-desc">
+                  当前商店登录凭证已过期或尚未授权。请点击下方链接前往网页完成验证，授权成功后点击【重试查询】即可加载模板列表。
+                </div>
+              </div>
+            </div>
+
+            ${authCode ? `
+            <div class="theme-auth-code-box">
+              <div>
+                <div class="theme-auth-code-label">设备验证码 (Device Code)</div>
+                <div class="theme-auth-code-val">${escapeHtml(authCode)}</div>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText('${escapeHtml(authCode)}'); showToast('已复制验证码');">复制验证码</button>
+            </div>
+            ` : ''}
+
+            <div class="theme-auth-actions">
+              <a href="${escapeHtml(authUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-shopify theme-auth-btn-primary">
+                <span>点击前往验证授权</span>
+                <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+              <div class="theme-auth-url-row">
+                验证链接：<a href="${escapeHtml(authUrl)}" target="_blank" rel="noopener noreferrer" class="theme-auth-link">${escapeHtml(authUrl)}</a>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <button class="btn btn-secondary btn-sm" onclick="openThemeSelectModal('${storeId}', '${action}')">重试查询</button>
+          </div>
+        `;
+      }
+
+      const autoLinkedText = escapeHtml(msg).replace(/(https?:\/\/[^\s<"']+)/g, (url) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="theme-auth-link">${url} ↗</a>`;
+      });
+
+      return `
+        <div style="color: var(--p-tone-critical-text); font-weight: 600; margin-bottom: 8px; font-size: 14px;">获取远程模板列表失败</div>
+        <div class="theme-error-box">
+          ${autoLinkedText}
+        </div>
+        <div style="text-align: center; margin-top: 14px;">
+          <button class="btn btn-secondary btn-sm" onclick="openThemeSelectModal('${storeId}', '${action}')">重试查询</button>
+        </div>
+      `;
+    }
+
+    function renderThemeCardList(themes, action) {
+      document.getElementById('theme-modal-loading').style.display = 'none';
+      document.getElementById('theme-modal-content').style.display = 'flex';
+
+      const cardList = document.getElementById('theme-card-list');
+      cardList.innerHTML = '';
+
+      let items = [];
+      if (action === 'push') {
+        items.push({
+          id: 'new',
+          name: '新建未发布主题副本 (Unpublished)',
+          role: 'new'
+        });
+      }
+      items = items.concat(themes);
+
+      cardList.innerHTML = items.map(t => {
+        let roleBadge = '';
+        if (t.role === 'live') {
+          roleBadge = `<span class="polaris-badge polaris-badge-critical">LIVE 正式</span>`;
+        } else if (t.role === 'development') {
+          roleBadge = `<span class="polaris-badge polaris-badge-success">DEV 开发</span>`;
+        } else if (t.role === 'new') {
+          roleBadge = `<span class="polaris-badge polaris-badge-neutral">+ 新建副本</span>`;
+        } else {
+          roleBadge = `<span class="polaris-badge polaris-badge-neutral">UNPUBLISHED</span>`;
+        }
+
+        const idDisplay = t.id === 'new' ? '将本地代码发布为全新独立副本' : `#${t.id}`;
+
+        return `
+          <div class="theme-radio-item" data-id="${t.id}" data-role="${t.role}" onclick="selectThemeItem('${t.id}', '${t.role}')">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              ${roleBadge}
+              <div style="display: flex; flex-direction: column;">
+                <span style="font-weight: 600; font-size: 13px; color: var(--p-color-text);">${t.name}</span>
+                <span style="font-family: var(--p-font-mono); font-size: 11px; color: var(--p-color-text-subdued);">${idDisplay}</span>
+              </div>
+            </div>
+            <input type="radio" name="theme_select" value="${t.id}">
+          </div>
+        `;
+      }).join('');
+
+      if (items.length > 0) {
+        selectThemeItem(items[0].id, items[0].role);
+      }
+    }
+
+    function selectThemeItem(id, role) {
+      selectedThemeId = id;
+      selectedThemeRole = role;
+
+      const rows = document.querySelectorAll('.theme-radio-item');
+      rows.forEach(r => {
+        const radio = r.querySelector('input[type="radio"]');
+        if (r.dataset.id === String(id)) {
+          r.classList.add('selected');
+          if (radio) radio.checked = true;
+        } else {
+          r.classList.remove('selected');
+          if (radio) radio.checked = false;
+        }
+      });
+
+      const isPush = currentActionTarget.action === 'push';
+      const confirmBtn = document.getElementById('theme-confirm-btn');
+      const newNameBox = document.getElementById('theme-new-name-box');
+
+      newNameBox.style.display = (isPush && id === 'new') ? 'flex' : 'none';
+
+      confirmBtn.disabled = false;
+      if (isPush && role === 'live') {
+        confirmBtn.className = 'btn btn-critical';
+        confirmBtn.innerText = '推送至线上正式 (LIVE)...';
+      } else {
+        confirmBtn.className = 'btn btn-primary';
+        confirmBtn.innerText = isPush ? '开始推送' : '开始拉取';
+      }
+    }
+
+    // 5 秒倒计时高危确认弹窗 (LIVE 主题推送)
+    let dangerCountdownTimer = null;
+    let dangerCountdownSeconds = 5;
+
+    function openDangerModal(store, theme) {
+      const modal = document.getElementById('danger-modal-backdrop');
+      if (!modal) return;
+
+      document.getElementById('danger-store-name').innerText = store.name || store.domain;
+      document.getElementById('danger-store-domain').innerText = store.domain;
+      document.getElementById('danger-theme-name').innerText = `${theme.name || '正式主题'} (#${theme.id})`;
+
+      const btn = document.getElementById('danger-confirm-btn');
+      btn.disabled = true;
+      dangerCountdownSeconds = 5;
+      btn.innerText = `确认推送线上 (${dangerCountdownSeconds}s)`;
+
+      if (dangerCountdownTimer) {
+        clearInterval(dangerCountdownTimer);
+        dangerCountdownTimer = null;
+      }
+
+      dangerCountdownTimer = setInterval(() => {
+        dangerCountdownSeconds--;
+        if (dangerCountdownSeconds > 0) {
+          btn.innerText = `确认推送线上 (${dangerCountdownSeconds}s)`;
+        } else {
+          clearInterval(dangerCountdownTimer);
+          dangerCountdownTimer = null;
+          btn.disabled = false;
+          btn.innerText = '确认推送线上 (LIVE)';
+        }
+      }, 1000);
+
+      modal.classList.add('active');
+    }
+
+    function closeDangerModal() {
+      if (dangerCountdownTimer) {
+        clearInterval(dangerCountdownTimer);
+        dangerCountdownTimer = null;
+      }
+      const modal = document.getElementById('danger-modal-backdrop');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function handleDangerBackdropClick(event) {
+      if (event.target && event.target.id === 'danger-modal-backdrop') {
+        closeDangerModal();
+      }
+    }
+
+    function confirmAndExecuteDangerPush() {
+      if (dangerCountdownSeconds > 0) return;
+      closeDangerModal();
+      closeThemeModal();
+      doExecuteThemeAction(true);
+    }
+
+    function closeThemeModal() {
+      themeQueryController?.abort();
+      themeQueryController = null;
+      closeDangerModal();
+      document.getElementById('theme-modal-backdrop').classList.remove('active');
+    }
+
+    async function submitThemeAction() {
+      if (!selectedThemeId) return;
+
+      const { storeId, action } = currentActionTarget;
+      const isPush = action === 'push';
+      const isLive = selectedThemeRole === 'live';
+
+      if (isPush && isLive) {
+        const store = storesCache.find(x => x.id === storeId) || { id: storeId, name: '当前商店', domain: '' };
+        const theme = (currentActionTarget.themes || []).find(x => String(x.id) === String(selectedThemeId)) || { id: selectedThemeId, name: '线上正式主题' };
+        openDangerModal(store, theme);
+        return;
+      }
+
+      closeThemeModal();
+      doExecuteThemeAction(false);
+    }
+
+    async function doExecuteThemeAction(allowLive) {
+      const { storeId, action } = currentActionTarget;
+      const themeId = selectedThemeId;
+      const themeRole = selectedThemeRole;
+      const customName = document.getElementById('theme-new-name').value.trim();
+
+      const store = storesCache.find(x => x.id === storeId);
+      touchStore(storeId);
+      openDrawer(storeId, store ? store.name : '商店', true);
+
+      try {
+        const res = await fetch(`/api/stores/${storeId}/action/${action}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            theme_id: themeId,
+            theme_role: themeRole,
+            allow_live: allowLive,
+            custom_name: customName
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '执行操作失败', 'error');
+        } else {
+          showToast(data.message || '任务已触发', 'success');
+        }
+      } catch (err) {
+        showToast('请求异常: ' + err, 'error');
+      }
+    }
+
+    // 触发操作 (dev, stop, open-folder)
+    async function triggerAction(storeId, action) {
+      try {
+        touchStore(storeId);
+        if (action === 'dev') {
+          const store = storesCache.find(x => x.id === storeId);
+          openDrawer(storeId, store ? store.name : '商店', true);
+        }
+        const res = await fetch(`/api/stores/${storeId}/action/${action}`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '操作失败', 'error');
+        } else {
+          showToast(data.message || '操作成功', 'success');
+        }
+        fetchStores();
+      } catch (err) {
+        showToast('请求失败: ' + err, 'error');
+      }
+    }
+
+    async function deleteStore(storeId, name) {
+      if (!confirm(`确定要移除商店 [${name}] 吗？此操作仅移除管理配置，不会删除您的本地主题代码。`)) return;
+      try {
+        const res = await fetch(`/api/stores/${storeId}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast(`已移除商店 [${name}]`, 'success');
+          fetchStores();
+        } else {
+          showToast('删除失败', 'error');
+        }
+      } catch (err) {
+        showToast('删除异常: ' + err, 'error');
+      }
+    }
+
+    // 终端抽屉 (Polaris Sheet)
+    function openDrawer(storeId, storeName, isRunning, isCommand = false) {
+      if (!isCommand) {
+        touchStore(storeId);
+      }
+      currentStoreId = storeId;
+      isCurrentTargetCommand = isCommand;
+      document.getElementById('drawer-store-name').innerText = storeName;
+      document.getElementById('terminal-body').innerHTML = '';
+      document.getElementById('sheet-overlay').classList.add('active');
+      document.getElementById('sheet-panel').classList.add('active');
+
+      const badge = document.getElementById('drawer-status-badge');
+      if (isRunning) {
+        badge.className = 'polaris-badge polaris-badge-success';
+        badge.innerText = isCommand ? 'COMMAND RUNNING' : 'DEV RUNNING';
+      } else {
+        badge.className = 'polaris-badge polaris-badge-neutral';
+        badge.innerText = 'STANDBY';
+      }
+
+      if (!isCommand) {
+        const store = storesCache.find(x => x.id === storeId);
+        if (store && store.prompt_needed) {
+          showPromptBox(store.prompt_needed);
+        } else {
+          hidePromptBox();
+        }
+      } else {
+        hidePromptBox();
+      }
+
+      connectLogsWs(storeId);
+    }
+
+    function closeDrawer() {
+      document.getElementById('sheet-overlay').classList.remove('active');
+      document.getElementById('sheet-panel').classList.remove('active');
+      if (ws) {
+        ws.close();
+        ws = null;
+      }
+      currentStoreId = null;
+      isCurrentTargetCommand = false;
+      fetchStores();
+      fetchCommands();
+    }
+
+    function connectLogsWs(storeId) {
+      if (ws) ws.close();
+      const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${location.host}/ws/logs/${storeId}`;
+      const statusEl = document.getElementById('ws-status');
+      const dotEl = document.getElementById('ws-dot');
+      statusEl.innerText = '连接中...';
+      dotEl.style.backgroundColor = '#ffd60a';
+
+      ws = new WebSocket(wsUrl);
+      const terminal = document.getElementById('terminal-body');
+
+      ws.onopen = () => {
+        statusEl.innerText = '在线流';
+        dotEl.style.backgroundColor = '#32d74b';
+      };
+
+      ws.onmessage = (e) => {
+        const span = document.createElement('span');
+        span.innerHTML = parseAnsi(e.data);
+        terminal.appendChild(span);
+
+        if (e.data.includes('[系统提示] 检测到商店需要前台访问密码')) {
+          showPromptBox({
+            type: 'store_password',
+            title: '需要前台访问密码 (Storefront Password)',
+            message: '目标商店启用了前台密码保护，请在下方输入密码后重试：'
+          });
+        } else if (e.data.includes('[系统提示] 检测到需要 Theme 访问令牌')) {
+          showPromptBox({
+            type: 'theme_password',
+            title: '需要 Theme Access 访问令牌',
+            message: '该操作需要 Theme Access App 生成的密码或 Admin API 令牌，请输入：'
+          });
+        }
+
+        if (document.getElementById('auto-scroll').checked) {
+          terminal.scrollTop = terminal.scrollHeight;
+        }
+      };
+
+      ws.onclose = () => {
+        statusEl.innerText = '挂起';
+        dotEl.style.backgroundColor = '#8c9196';
+      };
+    }
+
+    async function clearCurrentLogs() {
+      if (!currentStoreId) return;
+      const url = isCurrentTargetCommand
+        ? `/api/commands/${currentStoreId}/logs`
+        : `/api/stores/${currentStoreId}/logs`;
+      await fetch(url, { method: 'DELETE' });
+      document.getElementById('terminal-body').innerHTML = '';
+      hidePromptBox();
+      showToast('终端日志缓冲区已清空', 'info', 1600);
+    }
+
+    function copyLogsToClipboard() {
+      const text = document.getElementById('terminal-body').innerText;
+      if (!text) {
+        showToast('暂无日志可复制', 'warning');
+        return;
+      }
+      copyText(text, '终端日志已复制到剪贴板');
+    }
+
+    // 添加 / 编辑模态框
+    function openAddModal() {
+      document.getElementById('modal-title').innerText = '添加商店并绑定工程';
+      document.getElementById('edit-store-id').value = '';
+      document.getElementById('modal-name').value = '';
+      document.getElementById('modal-domain').value = '';
+      document.getElementById('modal-dir').value = '';
+      document.getElementById('modal-store-pwd').value = '';
+      document.getElementById('modal-theme-pwd').value = '';
+      document.getElementById('modal-backdrop').classList.add('active');
+      document.getElementById('modal-name').focus();
+    }
+
+    function openEditModal(id, name, domain, dir, storePwd, themePwd) {
+      document.getElementById('modal-title').innerText = '编辑商店与绑定工程';
+      document.getElementById('edit-store-id').value = id;
+      document.getElementById('modal-name').value = name;
+      document.getElementById('modal-domain').value = domain;
+      document.getElementById('modal-dir').value = dir;
+      document.getElementById('modal-store-pwd').value = storePwd || '';
+      document.getElementById('modal-theme-pwd').value = themePwd || '';
+      document.getElementById('modal-backdrop').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-backdrop').classList.remove('active');
+    }
+
+    async function submitStore() {
+      const id = document.getElementById('edit-store-id').value;
+      const name = document.getElementById('modal-name').value.trim();
+      const domain = document.getElementById('modal-domain').value.trim();
+      const directory = document.getElementById('modal-dir').value.trim();
+      const storePassword = document.getElementById('modal-store-pwd').value.trim();
+      const themePassword = document.getElementById('modal-theme-pwd').value.trim();
+
+      if (!name || !domain) {
+        showToast('请完整填写商店名称与域名', 'warning');
+        return;
+      }
+
+      const payload = {
+        name,
+        domain,
+        directory,
+        store_password: storePassword,
+        theme_password: themePassword
+      };
+      const url = id ? `/api/stores/${id}` : '/api/stores';
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '保存商店配置失败', 'error');
+          return;
+        }
+        closeModal();
+        showToast(id ? '商店配置已更新' : '已成功添加新商店', 'success');
+        fetchStores();
+      } catch (err) {
+        showToast('提交失败: ' + err, 'error');
+      }
+    }
+
+    // 快速命令交互方法
+    async function triggerCommandAction(commandId, action) {
+      try {
+        if (action === 'start') {
+          const cmd = commandsCache.find(x => x.id === commandId);
+          openDrawer(commandId, cmd ? cmd.name : '快速命令', true, true);
+        }
+        const res = await fetch(`/api/commands/${commandId}/action/${action}`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '操作失败', 'error');
+        } else {
+          showToast(data.message || '操作成功', 'success');
+        }
+        fetchCommands();
+      } catch (err) {
+        showToast('请求失败: ' + err, 'error');
+      }
+    }
+
+    async function deleteCommand(commandId, name) {
+      if (!confirm(`确定要删除快速命令 [${name}] 吗？`)) return;
+      try {
+        const res = await fetch(`/api/commands/${commandId}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast(`已删除快速命令 [${name}]`, 'success');
+          fetchCommands();
+        } else {
+          showToast('删除失败', 'error');
+        }
+      } catch (err) {
+        showToast('删除异常: ' + err, 'error');
+      }
+    }
+
+    function openAddCommandModal() {
+      document.getElementById('cmd-modal-title').innerText = '添加快速命令';
+      document.getElementById('edit-cmd-id').value = '';
+      document.getElementById('cmd-modal-name').value = '';
+      document.getElementById('cmd-modal-dir').value = '';
+      document.getElementById('cmd-modal-command').value = '';
+      document.getElementById('cmd-modal-desc').value = '';
+      document.getElementById('cmd-modal-backdrop').classList.add('active');
+      document.getElementById('cmd-modal-name').focus();
+    }
+
+    function openEditCommandModal(id) {
+      const c = commandsCache.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById('cmd-modal-title').innerText = '编辑快速命令';
+      document.getElementById('edit-cmd-id').value = c.id;
+      document.getElementById('cmd-modal-name').value = c.name;
+      document.getElementById('cmd-modal-dir').value = c.directory || '';
+      document.getElementById('cmd-modal-command').value = c.command || '';
+      document.getElementById('cmd-modal-desc').value = c.description || '';
+      document.getElementById('cmd-modal-backdrop').classList.add('active');
+    }
+
+    function closeCommandModal() {
+      document.getElementById('cmd-modal-backdrop').classList.remove('active');
+    }
+
+    async function pickFolderForCommandModal() {
+      const currentDir = document.getElementById('cmd-modal-dir').value.trim();
+      showToast('正在调起系统目录浏览窗口...', 'info', 2200);
+      try {
+        const res = await fetch('/api/select-folder', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ initial_dir: currentDir })
+        });
+        const data = await res.json();
+        if (data.path) {
+          document.getElementById('cmd-modal-dir').value = data.path;
+          showToast(`已选定目录: ${data.path}`, 'success', 1800);
+        }
+      } catch (err) {
+        showToast('选择文件夹出错: ' + err, 'error');
+      }
+    }
+
+    async function submitCommand() {
+      const id = document.getElementById('edit-cmd-id').value;
+      const name = document.getElementById('cmd-modal-name').value.trim();
+      const directory = document.getElementById('cmd-modal-dir').value.trim();
+      const command = document.getElementById('cmd-modal-command').value.trim();
+      const description = document.getElementById('cmd-modal-desc').value.trim();
+
+      if (!name || !command) {
+        showToast('请完整填写命令名称与执行命令', 'warning');
+        return;
+      }
+
+      const payload = {
+        name,
+        directory,
+        command,
+        description
+      };
+      const url = id ? `/api/commands/${id}` : '/api/commands';
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.detail || '保存快速命令失败', 'error');
+          return;
+        }
+        closeCommandModal();
+        showToast(id ? '快速命令已更新' : '已成功添加快速命令', 'success');
+        fetchCommands();
+      } catch (err) {
+        showToast('提交失败: ' + err, 'error');
+      }
+    }
+
+    // 主题模式切换 (深色 / 浅色)
+    function applyTheme(theme, save = true) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (save) {
+        localStorage.setItem('theme', theme);
+      }
+      const btn = document.getElementById('theme-toggle-btn');
+      const icon = document.getElementById('theme-toggle-icon');
+      const text = document.getElementById('theme-toggle-text');
+
+      if (theme === 'dark') {
+        if (text) text.innerText = '明亮模式';
+        if (btn) btn.title = '当前为暗色模式，点击切换为明亮模式';
+        if (icon) {
+          icon.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          `;
+        }
+      } else {
+        if (text) text.innerText = '暗色模式';
+        if (btn) btn.title = '当前为明亮模式，点击切换为暗色模式';
+        if (icon) {
+          icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const target = current === 'dark' ? 'light' : 'dark';
+      applyTheme(target, true);
+      showToast(target === 'dark' ? '已切换至暗色模式' : '已切换至明亮模式', 'info', 1600);
+    }
+
+    // 监听系统颜色方案变化
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          applyTheme(e.matches ? 'dark' : 'light', false);
+        }
+      });
+    }
+
+    // 同步按钮状态至当前主题
+    applyTheme(document.documentElement.getAttribute('data-theme') || 'light', false);
+
+    // 初始化加载
+    fetchStores();
+    fetchCommands();
+    setInterval(() => {
+      fetchStores();
+      fetchCommands();
+    }, 4000);
+  </script>
+</body>
+</html>
